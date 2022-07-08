@@ -55,8 +55,13 @@ function drinkInfo(drinkId) {
           console.log(drinkImage);
 
           // need to loop through ingrediants
-          var ingrediants = data.drinks[0].strIngredient1;
+          if (data.drinks[0].strIngredient15 === null) {
+            data.drinks[0].strIngredient15 = "";
+          } 
+
+          var ingrediants = data.drinks[0].strIngredient1 + data.drinks[0].strIngredient2 + ", " + data.drinks[0].strIngredient15;
           console.log("first ingrediant listed is: " + ingrediants);
+
 
           var instructions = "Instructions: " + data.drinks[0].strInstructions;
           console.log(instructions);
