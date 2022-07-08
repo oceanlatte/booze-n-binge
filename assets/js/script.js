@@ -23,6 +23,14 @@ function getDrink(drink) {
         response.json()
         .then(function(drinkData){
           console.log(drinkData, "drink data fetched");
+          // var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
+          // console.log(randomizer);
+         
+          // loop through all the drinks that come up by alcohol type
+          for (var i = 0; i < drinkData.drinks.length; i++){
+            var drinkName = drinkData.drinks[i].strDrink;
+            console.log(drinkName);
+          }//end for loop
         }) 
       }// end if statment
   });
