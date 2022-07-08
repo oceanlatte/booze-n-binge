@@ -6,15 +6,12 @@
 // Romance
 // Sci-fi
 
-// Vodka, Tequila, Whiskey, Brandy, Gin, Amaretto, Champagne
+// Options: Vodka, Tequila, Whiskey, Brandy, Gin, Amaretto, Champagne
 // COCKTAIL BY NAME: www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
 // SEARCH BY INGREDIANT: www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
-
 // INGREDIANT ID: www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=552
-// RANDOM COCKTAIL: www.thecocktaildb.com/api/json/v1/1/random.php
-// CATEGORY, ORDINARY DRINK: www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink
 
-// once they choose a movie then the cocktail functions will be ran
+// once they choose a movie (or alcohol type from a dropdown would work) then the cocktail functions will be ran
 function drinkChooser(drink) {
   var drinkByName = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + drink;
   console.log(drinkByName);
@@ -23,15 +20,16 @@ function drinkChooser(drink) {
       if(response.ok) {
         response.json()
         .then(function(drinkData){
-          console.log(drinkData, "drink data fetched");
+          console.log(drinkData, "all drink options for " + drink + " fetched");
 
-          // use randomized instead of for loop and where the [i] is for only one random drink
+          // use get a random index for which drink to choose
           var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
 
-          // get drink name and drink ID #, drink name will need to be displayed
+          // get drink name and drink ID #
+          // !!!!! drink name will need to be displayed dynamically on page !!!!!
           var drinkName = drinkData.drinks[randomizer].strDrink;
           var drinkId = drinkData.drinks[randomizer].idDrink;
-          console.log(drinkName, drinkId);
+          console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
 
           // drinkId to pass through drink information function
           drinkInfo(drinkId);
@@ -49,10 +47,22 @@ function drinkInfo(drinkId) {
       if(response.ok) {
         response.json()
         .then(function(data){
-          console.log(data);
+          console.log("drink information: ", data);
+
+          // image can be dynamically created
+          // image will need a container within the card div
+          var drinkImage = data.drinks[0].strDrinkThumb;
+          console.log(drinkImage);
+
+          // need to loop through ingrediants
+          var ingrediants = data.drinks[0].strIngredient1;
+          console.log("first ingrediant listed is: " + ingrediants);
+
+          var instructions = "Instructions: " + data.drinks[0].strInstructions;
+          console.log(instructions);
         })
       }// end if statment
     })
 };
 
-drinkChooser("tequila");
+drinkChooser("whiskey");
