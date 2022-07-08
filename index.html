@@ -1,33 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Booze n Binge</title>
 </head>
+
 <body>
-  <header>
-    <h1 id="title">Booze n Binge</h1>
+  <header class="hero">
+    <div class="hero-body">
+      <h1 id="title">Booze n Binge</h1>
+    </div>
   </header>
 
-  <main class="container">
-    <div class="card">
-      <h2>Movie Picker card</h2>
-    </div>
-    <div class="card">
-      <h2>Drink Picker Card</h2>
+  <main class="picker-container mt-5 mx-auto">
+    <div class="columns is-variable is-justify-content-space-around">
+
+      <div class="card column is-4 is-half">
+        <h2 class="card-header-title is-centered">Movie Picker card</h2>
+        <div class="dropdown mt-5">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <span>Select a genre</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+              
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card column is-4 is-half">
+        <h2 class="card-header-title is-centered">Drink Picker Card</h2>
+        <div class="dropdown mt-5">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+              <span>Select a liquor</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+              
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
-  <div id="hidden">
-    <h3>Thanks for choosing Booze n Binge!</h3>
-    <h4>Previous Pairings:</h4>
-    <ul id="storage-container">
-      <!-- <li>Previous pairings1</li> -->
-    </ul>
+  <div class="thanks-container mt-5 is-hidden">
+    <div id="hidden" class="column">
+      <h3>Thanks for choosing Booze n Binge!</h3>
+      <h4>Previous Pairings:</h4>
+      <ul id="storage-container">
+        <!-- <li>Previous pairings1</li> -->
+      </ul>
+    </div>
+
   </div>
   <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
