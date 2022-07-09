@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Booze n Binge</title>
 </head>
@@ -13,7 +17,7 @@
 <body>
   <header class="hero">
     <div class="hero-body">
-      <h1 id="title">Booze n Binge</h1>
+      <h1 id="title" class="title is-1 has-text-white has-text-centered">Booze n Binge</h1>
     </div>
   </header>
 
@@ -22,46 +26,70 @@
 
       <div class="card column is-4 is-half">
         <h2 class="card-header-title is-centered">Movie Picker card</h2>
-        <div class="dropdown mt-5">
+        <div class="dropdown is-active mt-5">
           <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
               <span>Select a genre</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-              
+              <span class="oi ml-2" data-glyph="chevron-bottom"></span>
             </button>
+          </div>
+          <div class="dropdown-menu is-hidden" id="dropdown-menu2" role="menu">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item">Comedy</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Animation</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Drama</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Action</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Thriller</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Romance</a>
+              <hr class="dropdown-divider">
+              <a href="#" class="dropdown-item">Sci-fi</a>
+              <hr class="dropdown-divider">
+            </div>
           </div>
         </div>
       </div>
       <div class="card column is-4 is-half">
         <h2 class="card-header-title is-centered">Drink Picker Card</h2>
-        <div class="dropdown mt-5">
-          <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-              <span>Select a liquor</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-              
-            </button>
-          </div>
+
+        <div class="drink-container">
+          <!-- <h3>Random Drink Name</h3>
+          <img id="drink-img"/>
+          <ul>
+            <li>Drink Ingrediants 1</li>
+            <li>Drink Ingrediants 2</li>
+            <li>Drink Ingrediants 3</li>
+            <li>Drink Ingrediants 4</li>
+          </ul>
+          <br>
+          <p>Drink Instructions here:</p> -->
         </div>
+
       </div>
 
     </div>
   </main>
 
-  <div class="thanks-container mt-5 is-hidden">
-    <div id="hidden" class="column">
-      <h3>Thanks for choosing Booze n Binge!</h3>
-      <h4>Previous Pairings:</h4>
-      <ul id="storage-container">
-        <!-- <li>Previous pairings1</li> -->
-      </ul>
+  <div class="thanks-container my-5">
+    <div id="hidden" class="columns is-flex-wrap-wrap">
+
+      <div class="column is-full">
+        <h3 class="subtitle is-4 has-text-white has-text-centered">Thanks for choosing Booze n Binge!</h3>
+      </div>
+      <h4 class="subtitle is-5 has-text-white ml-3 has-text-centered">Previous Pairings:</h4>
+      <div class="column">
+        <ul id="storage-container">
+          <!-- <li>Previous pairings1</li> -->
+        </ul>
+      </div>
     </div>
 
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 
