@@ -68,61 +68,8 @@ function drinkInfo(drinkId) {
 drinkChooser("whiskey");
 
 
-// movie and genre from api
-// random movie that matches genre static genre apiurl 
 
-
-
-
-// Thriller
-// Romance
-
-
-//  countries apiurl 
-// 37:
-// country: "United States"
-// countrycode: "US"
-// expiring: 70
-// id: 78
-// nl7: 59
-// tmovs: 3784
-// tseries: 2127
-// tvids: 5911
-
-// chooseGenre(genre) 
-//  fetch()
-// https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=70143836 to get genre by netflix id
-
-
-
-
-// var genreAction = '801362'
-// var genreAnimation = '4698'
-// var genreDrama = '5763'
-// var genreScifi = '10853'
-// var movieComedies = '6548'
-
-
-
-
-
-// fetch('https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=' + movieTitle + '&type=movie&audio=english', keyAndHost)
-// // https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=seven&type=movie&audio=english  
-
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
-
- 
-
-
-
-// fetch("https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english", keyAndHost)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
-
-
+// host and key in one varialble 
 var keyAndHost = {
 	method: "GET",
 	headers: {
@@ -140,7 +87,7 @@ var keyAndHost = {
           response.json()
           .then(function(movieData){
             console.log("this is the movie data: ", movieData);
-  
+              //  capture image and netflix id data 
                var movieImage = movieData.results[0].img;
                console.log(movieImage);
                var movieId = movieData.results[0].netflix_id;
@@ -151,7 +98,8 @@ var keyAndHost = {
         }
     });
   }
-  chooseMovie("hancock")
+  // call function 
+  chooseMovie("Michael Clayton")
 
 // use movieId to get genre 
   function movieGenre(movieId){
