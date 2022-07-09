@@ -94,34 +94,17 @@ drinkChooser("whiskey");
 // https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=70143836 to get genre by netflix id
 
 
-// 5:
-// genre: "Action"
-// netflix_id: 801362
-// 22:
-// genre: "Animation"
-// netflix_id: 4698
-// 188:
-// genre: "Drama"
-// netflix_id: 5763
-// 511:
-// genre: "Sci-Fi"
-// netflix_id: 108533
 
-var genreAction = '801362'
-var genreAnimation = '4698'
-var genreDrama = '5763'
-var genreScifi = '10853'
-var movieComedies = '6548'
+
+// var genreAction = '801362'
+// var genreAnimation = '4698'
+// var genreDrama = '5763'
+// var genreScifi = '10853'
+// var movieComedies = '6548'
 
 
 
-var keyAndHost = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e',
-		'X-RapidAPI-Host': 'unogs-unogs-v1.p.rapidapi.com'
-	}
-};
+
 
 // fetch('https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=' + movieTitle + '&type=movie&audio=english', keyAndHost)
 // // https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=seven&type=movie&audio=english  
@@ -130,22 +113,28 @@ var keyAndHost = {
 // 	.then(response => console.log(response))
 // 	.catch(err => console.error(err));
 
-// var genre = body.results.genre 
-// console.log(genre) 
+ 
 
-var movieTitle = 'hancock'
 
-fetch("https://unogs-unogs-v1.p.rapidapi.com/search/titles?order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english", keyAndHost)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
 
-  // not working below havent isolated genre
+// fetch("https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english", keyAndHost)
+// 	.then(response => response.json())
+// 	.then(response => console.log(response))
+// 	.catch(err => console.error(err));
+
+
+var keyAndHost = {
+	method: "GET",
+	headers: {
+		"X-RapidAPI-Key": "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e",
+		"X-RapidAPI-Host": "unogs-unogs-v1.p.rapidapi.com"
+	}
+};
 
   function chooseMovie(movieTitle) {
-    var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english", keyAndHost; 
+    var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english"; 
     console.log(movieSearch);
-    fetch(movieSearch)
+    fetch(movieSearch, keyAndHost)
       .then(function(response){
         if(response.ok) {
           response.json()
@@ -155,13 +144,30 @@ fetch("https://unogs-unogs-v1.p.rapidapi.com/search/titles?order_by=rating&count
                var movieImage = movieData.results[0].img;
                console.log(movieImage);
                var movieId = movieData.results[0].netflix_id;
-               console.log(movieId)
+               console.log("movie id: ",movieId)
            
-    
-  
-            // next function here 
-            
+            movieGenre(movieId)
           }) 
         }
     });
+  }
+  chooseMovie("hancock")
+
+  function movieGenre(movieId){
+    var GenreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
+    console.log(genreSearch)
+    fetch(genreSearch, keyAndHost)
+    .then(function(response){
+      if(response.ok) {
+        response.json()
+        .then(function(genreData){
+          console.log("this is the movie data: ", genreData);
+
+            //  var movieImage = genreData.results[0].img;
+            //  console.log(movieImage);
+            //  var movieId = genreData.results[0].netflix_id;
+            //  console.log("movie genre: ", movieId)
+        }) 
+      }
+  });
   }
