@@ -12,11 +12,6 @@
 
 }
 
-body {
-
-    color: #8D0801;
-
-}
 
 .thanks-container {
 
@@ -28,4 +23,12 @@ body {
 .button {
 
     color: #BF0603;
+
+}
+
+title, h1, h2, h3, h4 {
+
+    font-family: Bebas neue;
+
+    text-shadow: 0 0 15px rgba(0, 0, 0, .6);
 }
