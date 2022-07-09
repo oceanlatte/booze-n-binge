@@ -73,11 +73,18 @@ drinkChooser("whiskey");
 // https://unogs-unogs-v1.p.rapidapi.com/title/countries 
 // https://unogs-unogs-v1.p.rapidapi.com/title/details 
 // https://unogs-unogs-v1.p.rapidapi.com/static/genres 
-// 'X-RapidAPI-Key': '5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e', 
+// 'X-RapidAPI-Key': '5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e', key not working yet
 // 'X-RapidAPI-Host': 'unogs-unogs-v1.p.rapidapi.com' 
 // https://unogs-unogs-v1.p.rapidapi.com/title/genres 
 var apiKey = "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e"
-
+// random movie that matches genre 
+// Comedy
+// Animation
+// Drama
+// Action 
+// Thriller
+// Romance
+// Sci-fi
 
 // chooseGenre(genre) 
- 
+//  fetch()
