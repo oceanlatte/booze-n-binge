@@ -66,7 +66,7 @@ function drinkInfo(drinkId) {
   };
 
 // display cocktal information to page
-function drinkDisplayer(drink, image, ingrediants, instructions) { 
+function drinkDisplayer(drink, image, ingredients, instructions) { 
   var displayDrink = $(".drink-container");
 
   var displayTitle = $("<h3>")
@@ -76,14 +76,14 @@ function drinkDisplayer(drink, image, ingrediants, instructions) {
   var displayImage = $("<img>")
     .attr("src", image);
   
-  var ingrediantsHeader = $("<h4>")
-    .text("Ingrediants:");
+  var ingredientsHeader = $("<h4>")
+    .text("ingredients:");
 
-  var ingrediantsContainer = $("<ul>");
+  var ingredientsContainer = $("<ul>");
 
-  for (var i = 0; i < ingrediants.length; i++) {
-    var displayIngrediants = $("<li>").text(ingrediants[i]);
-    ingrediantsContainer.append(displayIngrediants);
+  for (var i = 0; i < ingredients.length; i++) {
+    var displayingredients = $("<li>").text(ingredients[i]);
+    ingredientsContainer.append(displayingredients);
   }
   
   var instructionsHeader = $("<h4>")
@@ -93,7 +93,7 @@ function drinkDisplayer(drink, image, ingrediants, instructions) {
   var displayInstructions = $("<p>")
     .text(instructions);
 
-  displayDrink.append(displayTitle, displayImage, ingrediantsHeader, ingrediantsContainer, instructionsHeader, displayInstructions);
+  displayDrink.append(displayTitle, displayImage, ingredientsHeader, ingredientsContainer, instructionsHeader, displayInstructions);
 }
 
 
