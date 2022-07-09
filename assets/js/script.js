@@ -60,28 +60,60 @@ function drinkInfo(drinkId) {
           //   data.drinks[0].strIngredient15 = " "}
           // if (data.drinks[0].strIngredient15 === null) {
           //   data.drinks[0].strIngredient15 = " "}
-          for (let i = 1; i <= 15; i++) {
-            ingredient = "strIngredient" + [i];
-            console.log(ingredient);
-            if (data.drinks[0].ingredient === null) {
-              console.log((data.drinks[0].ingredient));
-              data.drinks[0].ingredient = " "}
-          }
 
+          // var blank = {};
+          // for (let i = 1; i <= 15; i++) {
+          //   let ingredient = array("data.drinks[0].strIngredient" + [i]);
+          //  // const alling = [ingredient];
+          
+          //   console.log(ingredient);
+          //   ingredient.forEach(item => {
+          //     if (any === null) throw blank;
+          //   });
+          // }
+     
 
-          ingredients = (`${data.drinks[0].strIngredient1} \ ${data.drinks[0].strIngredient2} \ ${data.drinks[0].strIngredient3} \ ${data.drinks[0].strIngredient4} \ ${data.drinks[0].strIngredient5} \ ${data.drinks[0].strIngredient6} \ ${data.drinks[0].strIngredient7} \ ${data.drinks[0].strIngredient8} \ ${data.drinks[0].strIngredient9} \ ${data.drinks[0].strIngredient10} \ ${data.drinks[0].strIngredient11} \ ${data.drinks[0].strIngredient12} \ ${data.drinks[0].strIngredient13} \ ${data.drinks[0].strIngredient14} \ ${data.drinks[0].strIngredient15}`)
+          let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient15
+          )
+
+          let results = []
+
+          ingredientarray.forEach(element => {
+            if (element !== null) {
+              results.push(element)
+            }
+          })
+
+          console.log(results)
+
+          // console.log(ingredientarray)
+
+          // ingredientarray.forEach(changenull)
+
+          // function changenull(item, index, arr) {
+          //   console.log(item)
+          //   if (item === null) {
+          //     item = " ";
+          //   }
+          // }
+
+          // Array.from(ingredientarray).forEach(changenull);
+            
+          // console.log(ingredientarray)
+
+          // ingredients = (`${data.drinks[0].strIngredient1} \ ${data.drinks[0].strIngredient2} \ ${data.drinks[0].strIngredient3} \ ${data.drinks[0].strIngredient4} \ ${data.drinks[0].strIngredient5} \ ${data.drinks[0].strIngredient6} \ ${data.drinks[0].strIngredient7} \ ${data.drinks[0].strIngredient8} \ ${data.drinks[0].strIngredient9} \ ${data.drinks[0].strIngredient10} \ ${data.drinks[0].strIngredient11} \ ${data.drinks[0].strIngredient12} \ ${data.drinks[0].strIngredient13} \ ${data.drinks[0].strIngredient14} \ ${data.drinks[0].strIngredient15}`)
 
 
           // var ingrediants = data.drinks[0].strIngredient1 + data.drinks[0].strIngredient2 + ", " + data.drinks[0].strIngredient15;
 
-          console.log("Ingredients listed are: " + ingredients);
+          //console.log("Ingredients listed are: " + ingredients);
 
 
           var instructions = "Instructions: " + data.drinks[0].strInstructions;
           console.log(instructions);
         })
       }// end if statment
-    })
-};
+    });
+  };
 
 drinkChooser("whiskey");
