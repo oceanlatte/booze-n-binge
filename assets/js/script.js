@@ -78,16 +78,38 @@ drinkChooser("whiskey");
 
 // https://unogs-unogs-v1.p.rapidapi.com/title/genres 
 
-var apiKey = "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e"
 
-// random movie that matches genre 
+
+// random movie that matches genre static genre apiurl 
+
+// 5:
+// genre: "Action"
+// netflix_id: 801362
+// 22:
+// genre: "Animation"
+// netflix_id: 4698
+// 188:
+// genre: "Drama"
+// netflix_id: 5763
+// 511:
+// genre: "Sci-Fi"
+// netflix_id: 108533
+
 // Comedy
-// Animation
-// Drama
-// Action 
 // Thriller
 // Romance
-// Sci-fi
+
+
+//  countries apiurl 
+// 37:
+// country: "United States"
+// countrycode: "US"
+// expiring: 70
+// id: 78
+// nl7: 59
+// tmovs: 3784
+// tseries: 2127
+// tvids: 5911
 
 // chooseGenre(genre) 
 //  fetch()
@@ -101,7 +123,7 @@ var keyAndHost = {
 	}
 };
 
-fetch('https://unogs-unogs-v1.p.rapidapi.com/static/genres', keyAndHost)
+fetch('https://unogs-unogs-v1.p.rapidapi.com/title/details', keyAndHost)
 	.then(response => response.json())
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
