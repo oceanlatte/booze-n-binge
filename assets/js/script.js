@@ -69,33 +69,11 @@ drinkChooser("whiskey");
 
 
 // movie and genre from api
-
-// https://unogs-unogs-v1.p.rapidapi.com/title/countries 
-// https://unogs-unogs-v1.p.rapidapi.com/title/details 
-// https://unogs-unogs-v1.p.rapidapi.com/static/genres 
-
-
-
-// https://unogs-unogs-v1.p.rapidapi.com/title/genres 
-
-
-
 // random movie that matches genre static genre apiurl 
 
-// 5:
-// genre: "Action"
-// netflix_id: 801362
-// 22:
-// genre: "Animation"
-// netflix_id: 4698
-// 188:
-// genre: "Drama"
-// netflix_id: 5763
-// 511:
-// genre: "Sci-Fi"
-// netflix_id: 108533
 
-// Comedy
+
+
 // Thriller
 // Romance
 
@@ -113,6 +91,28 @@ drinkChooser("whiskey");
 
 // chooseGenre(genre) 
 //  fetch()
+// https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=70143836 to get genre by netflix id
+
+
+// 5:
+// genre: "Action"
+// netflix_id: 801362
+// 22:
+// genre: "Animation"
+// netflix_id: 4698
+// 188:
+// genre: "Drama"
+// netflix_id: 5763
+// 511:
+// genre: "Sci-Fi"
+// netflix_id: 108533
+
+var genreAction = '801362'
+var genreAnimation = '4698'
+var genreDrama = '5763'
+var genreScifi = '10853'
+var movieComedies = '6548'
+
 
 
 var keyAndHost = {
@@ -123,39 +123,45 @@ var keyAndHost = {
 	}
 };
 
-fetch('https://unogs-unogs-v1.p.rapidapi.com/title/details', keyAndHost)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+// fetch('https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=' + movieTitle + '&type=movie&audio=english', keyAndHost)
+// // https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=seven&type=movie&audio=english  
 
-// var genre = body.results.genre 
-// console.log(genre) 
-
-// fetch('https://unogs-unogs-v1.p.rapidapi.com/static/genres', keyAndHost)
 // 	.then(response => response.json())
 // 	.then(response => console.log(response))
 // 	.catch(err => console.error(err));
 
-//   // not working below havent isolated genre
+// var genre = body.results.genre 
+// console.log(genre) 
 
-//   function chooseGenre(genre) {
-//     var movieGenre = "https://unogs-unogs-v1.p.rapidapi.com/static/genres" + genre ; 
-//     console.log(movieGenre);
-//     fetch(movieGenre)
-//       .then(function(response){
-//         if(response.ok) {
-//           response.json()
-//           .then(function(movieData){
-//             console.log(movieData);
+var movieTitle = 'hancock'
+
+fetch("https://unogs-unogs-v1.p.rapidapi.com/search/titles?order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english", keyAndHost)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+
+  // not working below havent isolated genre
+
+  function chooseMovie(movieTitle) {
+    var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english", keyAndHost; 
+    console.log(movieSearch);
+    fetch(movieSearch)
+      .then(function(response){
+        if(response.ok) {
+          response.json()
+          .then(function(movieData){
+            console.log("this is the movie data: ", movieData);
   
-//             // use get a random index for which movie to choose
-//             var randomizer = Math.floor(Math.random() * movieData.genre.length);
-  
+               var movieImage = movieData.results[0].img;
+               console.log(movieImage);
+               var movieId = movieData.results[0].netflix_id;
+               console.log(movieId)
+           
     
   
-//             // next function here 
+            // next function here 
             
-//           }) 
-//         }// end if statment
-//     });
-//   }
+          }) 
+        }
+    });
+  }
