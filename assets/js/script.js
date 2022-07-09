@@ -52,16 +52,24 @@ function drinkInfo(drinkId) {
           var drinkImage = data.drinks[0].strDrinkThumb;
 
           // need to loop through ingrediants
-          var ingrediants = data.drinks[0].strIngredient1;
-          console.log("first ingrediant listed is: " + ingrediants);
+          let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient3, data.drinks[0].strIngredient4, data.drinks[0].strIngredient5, data.drinks[0].strIngredient6, data.drinks[0].strIngredient7, data.drinks[0].strIngredient8, data.drinks[0].strIngredient9, data.drinks[0].strIngredient10, data.drinks[0].strIngredient11, data.drinks[0].strIngredient12, data.drinks[0].strIngredient13, data.drinks[0].strIngredient14,data.drinks[0].strIngredient15)
+
+          let results = []
+          ingredientarray.forEach(element => {
+            if (element !== null) {
+              results.push(element)
+            }
+          })
+          //results will give only valid ingredients
+          console.log(results)
 
           var instructions = "Instructions: " + data.drinks[0].strInstructions;
 
           drinkDisplayer(chosenDrink, drinkImage, instructions); // need to add ingrediants
         })
       }// end if statment
-    })
-};
+    });
+  };
 
 // display cocktal information to page
 function drinkDisplayer(drink, image, instructions) { // may need to add ingrediants?
