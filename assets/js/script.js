@@ -76,7 +76,9 @@ drinkChooser("whiskey");
 // 'X-RapidAPI-Key': '5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e', key not working yet
 // 'X-RapidAPI-Host': 'unogs-unogs-v1.p.rapidapi.com' 
 // https://unogs-unogs-v1.p.rapidapi.com/title/genres 
+
 var apiKey = "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e"
+
 // random movie that matches genre 
 // Comedy
 // Animation
@@ -88,3 +90,19 @@ var apiKey = "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e"
 
 // chooseGenre(genre) 
 //  fetch()
+
+
+var keyAndHost = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e',
+		'X-RapidAPI-Host': 'unogs-unogs-v1.p.rapidapi.com'
+	}
+};
+
+fetch('https://unogs-unogs-v1.p.rapidapi.com/static/genres', keyAndHost)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+var genre = response.results.genre 
+console.log(genre)
