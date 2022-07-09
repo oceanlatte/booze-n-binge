@@ -7,11 +7,7 @@
 // Sci-fi
 
 // Options: Vodka, Tequila, Whiskey, Brandy, Gin, Amaretto, Champagne
-// COCKTAIL BY NAME: www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
-// SEARCH BY INGREDIANT: www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
-// INGREDIANT ID: www.thecocktaildb.com/api/json/v1/1/lookup.php?iid=552
-
-// once they choose a movie (or alcohol type from a dropdown would work) then the cocktail functions will be ran
+// once they choose a movie genre then the cocktail functions will be ran
 function drinkChooser(drink) {
   var drinkByName = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + drink;
   console.log(drinkByName);
@@ -49,20 +45,44 @@ function drinkInfo(drinkId) {
         .then(function(data){
           console.log("drink information: ", data);
 
+          var chosenDrink = data.drinks[0].strDrink; 
+
           // image can be dynamically created
           // image will need a container within the card div
           var drinkImage = data.drinks[0].strDrinkThumb;
-          console.log(drinkImage);
 
           // need to loop through ingrediants
           var ingrediants = data.drinks[0].strIngredient1;
           console.log("first ingrediant listed is: " + ingrediants);
 
           var instructions = "Instructions: " + data.drinks[0].strInstructions;
-          console.log(instructions);
+
+          drinkDisplayer(chosenDrink, drinkImage, instructions); // need to add ingrediants
         })
       }// end if statment
     })
 };
 
-drinkChooser("whiskey");
+// display cocktal information to page
+function drinkDisplayer(drink, image, instructions) { // may need to add ingrediants?
+  var displayDrink = $(".drink-container");
+
+  var displayTitle = $("<h3>")
+    //.addClass() add Bulma styling class to h3 for: bigger text, bold, padding
+    .text(drink);
+
+  var displayImage = $("<img>")
+    .attr("src", image);
+  
+  var ingrediantsHeader = $("<h4>")
+    //.addClass() add possible Bulma styling 
+    .text("Ingrediants:");
+  
+  var displayInstructions = $("<p>")
+    //.addClass() add Bulma styling to add: padding and overflow scroll bar
+    .text(instructions);
+
+  displayDrink.append(displayTitle, displayImage, ingrediantsHeader, displayInstructions);
+
+}
+drinkChooser("gin");
