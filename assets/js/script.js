@@ -153,20 +153,20 @@ var keyAndHost = {
   }
   chooseMovie("hancock")
 
+// use movieId to get genre 
   function movieGenre(movieId){
-    var GenreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
+    var genreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
     console.log(genreSearch)
     fetch(genreSearch, keyAndHost)
     .then(function(response){
       if(response.ok) {
         response.json()
         .then(function(genreData){
-          console.log("this is the movie data: ", genreData);
-
-            //  var movieImage = genreData.results[0].img;
-            //  console.log(movieImage);
-            //  var movieId = genreData.results[0].netflix_id;
-            //  console.log("movie genre: ", movieId)
+          console.log("this is the genre data: ", genreData);
+            // genre name or genre id .genre or .genre_id      just the first genre listed [0]
+             var genreId = genreData.results[0].genre_id;
+             console.log(genreId);
+            
         }) 
       }
   });
