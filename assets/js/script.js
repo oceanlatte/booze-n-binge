@@ -46,51 +46,55 @@ function drinkInfo(drinkId) {
           console.log("drink information: ", data);
 
           var chosenDrink = data.drinks[0].strDrink; 
-
-          // image can be dynamically created
-          // image will need a container within the card div
           var drinkImage = data.drinks[0].strDrinkThumb;
-
-          // need to loop through ingrediants
           let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient3, data.drinks[0].strIngredient4, data.drinks[0].strIngredient5, data.drinks[0].strIngredient6, data.drinks[0].strIngredient7, data.drinks[0].strIngredient8, data.drinks[0].strIngredient9, data.drinks[0].strIngredient10, data.drinks[0].strIngredient11, data.drinks[0].strIngredient12, data.drinks[0].strIngredient13, data.drinks[0].strIngredient14,data.drinks[0].strIngredient15)
 
+          //results will give only valid ingredients
           let results = []
           ingredientarray.forEach(element => {
-            if (element !== null) {
+            if (element !== null || element == "") {
               results.push(element)
             }
           })
-          //results will give only valid ingredients
-          console.log(results)
 
-          var instructions = "Instructions: " + data.drinks[0].strInstructions;
+          var instructions = data.drinks[0].strInstructions;
 
-          drinkDisplayer(chosenDrink, drinkImage, instructions); // need to add ingrediants
+          drinkDisplayer(chosenDrink, drinkImage, results, instructions); 
         })
       }// end if statment
     });
   };
 
 // display cocktal information to page
-function drinkDisplayer(drink, image, instructions) { // may need to add ingrediants?
+function drinkDisplayer(drink, image, ingrediants, instructions) { 
   var displayDrink = $(".drink-container");
 
   var displayTitle = $("<h3>")
-    //.addClass() add Bulma styling class to h3 for: bigger text, bold, padding
+    .addClass("is-size-5") 
     .text(drink);
 
   var displayImage = $("<img>")
     .attr("src", image);
   
   var ingrediantsHeader = $("<h4>")
-    //.addClass() add possible Bulma styling 
     .text("Ingrediants:");
+
+  var ingrediantsContainer = $("<ul>");
+
+  for (var i = 0; i < ingrediants.length; i++) {
+    var displayIngrediants = $("<li>").text(ingrediants[i]);
+    ingrediantsContainer.append(displayIngrediants);
+  }
   
+  var instructionsHeader = $("<h4>")
+    .addClass("mt-2")
+    .text("Instructions: ");
+
   var displayInstructions = $("<p>")
-    //.addClass() add Bulma styling to add: padding and overflow scroll bar
     .text(instructions);
 
-  displayDrink.append(displayTitle, displayImage, ingrediantsHeader, displayInstructions);
-
+  displayDrink.append(displayTitle, displayImage, ingrediantsHeader, ingrediantsContainer, instructionsHeader, displayInstructions);
 }
+
+
 drinkChooser("gin");
