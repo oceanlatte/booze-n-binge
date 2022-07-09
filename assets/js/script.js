@@ -1,3 +1,4 @@
+var movieTitle = document.querySelector(".input").textContent;
 // Comedy
 // Animation
 // Drama
@@ -176,4 +177,23 @@ function drinkDisplayer(drink, image, instructions) { // may need to add ingredi
   displayDrink.append(displayTitle, displayImage, ingrediantsHeader, displayInstructions);
 
 }
+
+drinkChooser("gin");
+
+$(".button").click(function (event) {
+
+  event.preventDefault();
+
+  movieTitle = $(this).siblings(".input").val().trim();
+  console.log(movieTitle);
+
+  if (movieTitle) {
+
+    chooseMovie(movieTitle);
+
+    movieTitle = "";
+
+  }
+  
+})
 
