@@ -11,38 +11,56 @@ var keyAndHost = {
 
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english"; 
-  console.log(movieSearch);
+  
   fetch(movieSearch, keyAndHost)
     .then(function(response){
       if(response.ok) {
         response.json()
         .then(function(movieData){
-          console.log("this is the movie data: ", movieData);
-          //  capture image and netflix id data 
-          var movieImage = movieData.results[0].img;
-          console.log(movieImage);
-          var movieId = movieData.results[0].netflix_id;
-          console.log("movie id: ",movieId)
-          
-          movieGenre(movieId);
+          displayMovie(movieTitle, movieData);
         }) 
       }
   });
 };
 
+// find correct movie index to bring up correct poster
+function displayMovie(movieTitle, movieData) {
+  console.log("this is all the results for: ", movieTitle, movieData.results);
+  var movieInfoEl = $(".movie-info");
+
+  var displayTitle = $("<h3>")
+    .addClass("is-size-5")
+    .text(movieTitle + " is available!")
+  ;
+
+  movieInfoEl.append(displayTitle);
+
+  for (var i = 0; i < movieData.results.length; i++) {
+
+    var findMovie = movieData.results[i].title;   
+    if (findMovie.toLowerCase() == movieTitle.toLowerCase()) {
+      var displayPoster = $("<img>")
+      .attr("src", movieData.results[i].poster);
+      //append correct poster for searched movie
+      movieInfoEl.append(displayPoster);
+
+      // find correct movie and send netflix ID to genre function
+      var findMovieId = movieData.results[i].netflix_id;
+      console.log(findMovieId, "genre ID?")
+      movieGenre(findMovieId);
+    }
+  }
+};
+
 // use movieId to get genreID
 function movieGenre(movieId){
   var genreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
-  console.log(genreSearch)
   fetch(genreSearch, keyAndHost)
   .then(function(response){
     if(response.ok) {
       response.json()
       .then(function(genreData){
-        console.log("this is the genre data: ", genreData);
-        // genre name or genre id .genre or .genre_id      just the first genre listed [0]
         genreId = genreData.results[0].genre_id;
-        console.log(genreId);
         match(genreId);
       }) 
     }
@@ -78,7 +96,6 @@ function match(genreId) {
 // once they choose a movie genre then the cocktail functions will be ran
 function drinkChooser(drink) {
   var drinkByName = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + drink;
-  console.log(drinkByName);
   fetch(drinkByName)
     .then(function(response){
       if(response.ok) {
@@ -110,8 +127,6 @@ function drinkInfo(drinkId) {
       if(response.ok) {
         response.json()
         .then(function(data){
-          console.log("drink information: ", data);
-
           var chosenDrink = data.drinks[0].strDrink; 
           var drinkImage = data.drinks[0].strDrinkThumb;
           let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient3, data.drinks[0].strIngredient4, data.drinks[0].strIngredient5, data.drinks[0].strIngredient6, data.drinks[0].strIngredient7, data.drinks[0].strIngredient8, data.drinks[0].strIngredient9, data.drinks[0].strIngredient10, data.drinks[0].strIngredient11, data.drinks[0].strIngredient12, data.drinks[0].strIngredient13, data.drinks[0].strIngredient14,data.drinks[0].strIngredient15)
