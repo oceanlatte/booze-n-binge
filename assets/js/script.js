@@ -1,6 +1,6 @@
 var movieTitle = document.querySelector(".input").textContent;
 
-// host and key in one varialble 
+// host and key in one variable 
 var keyAndHost = {
 	method: "GET",
 	headers: {
@@ -18,7 +18,7 @@ function chooseMovie(movieTitle) {
         response.json()
         .then(function(movieData){
           console.log("this is the movie data: ", movieData);
-          //  capture image and netflix id data 
+          //  capture image and netflix id data
           var movieImage = movieData.results[0].img;
           console.log(movieImage);
           var movieId = movieData.results[0].netflix_id;
@@ -27,6 +27,11 @@ function chooseMovie(movieTitle) {
           movieGenre(movieId);
           localStorage.setItem("savedMovie", movieTitle);
           displayDrink(movieTitle);
+          
+          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
+          // if(movieData === '0') {
+          //   alert("Not a Valid Choice")
+          // } 
         }) 
       }
   });
@@ -191,4 +196,7 @@ function displayDrink(savedDrink) {
   console.log(pair); 
   $(".column ul").append("<li>" +  pair + "</li>");
 }
-
+// reset forms after second search 
+function resetForm() {
+  document.getElementById("myForm").reset();
+}
