@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Booze n Binge</title>
 </head>
@@ -24,23 +25,19 @@
     <div class="columns is-variable is-justify-content-space-around">
 
       <div class="card column is-4 is-half">
-        <h2 class="card-header-title is-centered">Movie Picker card</h2>
-        <div class="dropdown mt-5">
-          <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-              <span>Select a genre</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-
-            </button>
-          </div>
+        <h2 class="card-header-title is-centered subtitle is-3">Movie Picker</h2>
+        <div class="field">
+          <label class="label mt-3 subtitle is-5">Movie Title</label>
+        </div>
+        <div class="field"> 
+          <input class="input" type="text" placeholder="Movie input">
+          <button class="button is-black mt-5">Search</button>
         </div>
       </div>
       <div class="card column is-4 is-half">
-        <h2 class="card-header-title is-centered">Drink Picker Card</h2>
+        <h2 class="card-header-title is-centered subtitle is-3">Drink Card</h2>
 
-        <div class="drink-container">
+        <div class="drink-container subtitle is-5">
           <!-- <h3>Random Drink Name</h3>
           <img id="drink-img"/>
           <ul>
@@ -52,7 +49,7 @@
           <br>
           <p>Drink Instructions here:</p> -->
         </div>
-       
+
       </div>
 
     </div>

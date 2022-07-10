@@ -1,12 +1,82 @@
-// Comedy
-// Animation
-// Drama
-// Action 
-// Thriller
-// Romance
-// Sci-fi
+var movieTitle = document.querySelector(".input").textContent;
 
-// Options: Vodka, Tequila, Whiskey, Brandy, Gin, Amaretto, Champagne
+// host and key in one varialble 
+var keyAndHost = {
+	method: "GET",
+	headers: {
+		"X-RapidAPI-Key": "5259f56577mshcc2e50fa11e554dp1d2517jsn803a2737221e",
+		"X-RapidAPI-Host": "unogs-unogs-v1.p.rapidapi.com"
+	}
+};
+
+function chooseMovie(movieTitle) {
+  var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title="+ movieTitle +"&type=movie&audio=english"; 
+  console.log(movieSearch);
+  fetch(movieSearch, keyAndHost)
+    .then(function(response){
+      if(response.ok) {
+        response.json()
+        .then(function(movieData){
+          console.log("this is the movie data: ", movieData);
+          //  capture image and netflix id data 
+          var movieImage = movieData.results[0].img;
+          console.log(movieImage);
+          var movieId = movieData.results[0].netflix_id;
+          console.log("movie id: ",movieId)
+          
+          movieGenre(movieId);
+        }) 
+      }
+  });
+};
+
+// use movieId to get genreID
+function movieGenre(movieId){
+  var genreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
+  console.log(genreSearch)
+  fetch(genreSearch, keyAndHost)
+  .then(function(response){
+    if(response.ok) {
+      response.json()
+      .then(function(genreData){
+        console.log("this is the genre data: ", genreData);
+        // genre name or genre id .genre or .genre_id      just the first genre listed [0]
+        genreId = genreData.results[0].genre_id;
+        console.log(genreId);
+        match(genreId);
+      }) 
+    }
+  });
+};
+
+//match to alcohol
+function match(genreId) {
+  if (genreId === 783 || genreId === 4370) { // children and family or sports 
+    drinkChooser("beer") }
+  else if (genreId === 8883) {//romance
+    drinkChooser("champagne") }
+  else if (genreId === 1365) { //action and advenure
+    drinkChooser("whiskey") }
+  else if (genreId === 7424) {//anime
+    drinkChooser("amaretto") }
+  else if (genreId === 31574) {//classics
+    drinkChooser("scotch") }
+  else if (genreId === 6548) {//comedies
+    drinkChooser("brandy") }
+  else if (genreId === 5763) {// dramas
+    drinkChooser("wine") }
+  else if (genreId === 8711 || genreId === 8933) {//horrors or thrillers
+    drinkChooser("tequila") }
+  else if (genreId === 1701) {//music
+    drinkChooser("vodka") }
+  else if (genreId === 1492) {//Sci-fi and Fantasy
+    drinkChooser("gin") }              
+  else {
+    drinkChooser("sweet vermouth") }  
+  }
+
+
+
 // once they choose a movie genre then the cocktail functions will be ran
 function drinkChooser(drink) {
   var drinkByName = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + drink;
@@ -22,7 +92,6 @@ function drinkChooser(drink) {
           var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
 
           // get drink name and drink ID #
-          // !!!!! drink name will need to be displayed dynamically on page !!!!!
           var drinkName = drinkData.drinks[randomizer].strDrink;
           var drinkId = drinkData.drinks[randomizer].idDrink;
           console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
@@ -65,6 +134,7 @@ function drinkInfo(drinkId) {
     });
   };
 
+
 // display cocktal information to page
 function drinkDisplayer(drink, image, ingredients, instructions) { 
   var displayDrink = $(".drink-container");
@@ -96,5 +166,17 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
   displayDrink.append(displayTitle, displayImage, ingredientsHeader, ingredientsContainer, instructionsHeader, displayInstructions);
 }
 
+// Button click for submit movie search
+$(".button").click(function (event) {
 
-drinkChooser("gin");
+  event.preventDefault();
+
+  movieTitle = $(this).siblings(".input").val().trim();
+  console.log(movieTitle);
+
+  if (movieTitle) {
+    chooseMovie(movieTitle);
+    movieTitle = "";
+  }
+});
+
