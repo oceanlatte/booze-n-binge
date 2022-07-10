@@ -1,4 +1,5 @@
 var movieTitle = document.querySelector(".input").textContent;
+var movieInfoEl = $(".movie-info");
 
 // host and key in one varialble 
 var keyAndHost = {
@@ -28,43 +29,29 @@ function displayMovie(movieTitle, movieData) {
   console.log("this is all the results for: ", movieTitle, movieData.results);
   var movieInfoEl = $(".movie-info");
 
-  var displayTitle = $("<h3>")
-    .addClass("is-size-5")
-    .text(movieTitle + " is available!")
-  ;
-
-  movieInfoEl.append(displayTitle);
-
   for (var i = 0; i < movieData.results.length; i++) {
 
     var findMovie = movieData.results[i].title;   
     if (findMovie.toLowerCase() == movieTitle.toLowerCase()) {
+      
+      //display searched title
+      var displayTitle = $("<h3>")
+        .addClass("is-size-5")
+        .text(movieTitle + " is available!")
+      ;
+  
+      movieInfoEl.append(displayTitle);
+
+      // display correct poster
       var displayPoster = $("<img>")
       .attr("src", movieData.results[i].poster);
-      //append correct poster for searched movie
       movieInfoEl.append(displayPoster);
 
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
-      console.log(findMovieId, "genre ID?")
-      movieGenre(findMovieId);
+      match(findMovieId);
     }
   }
-};
-
-// use movieId to get genreID
-function movieGenre(movieId){
-  var genreSearch ="https://unogs-unogs-v1.p.rapidapi.com/title/genres?netflix_id=" + movieId; 
-  fetch(genreSearch, keyAndHost)
-  .then(function(response){
-    if(response.ok) {
-      response.json()
-      .then(function(genreData){
-        genreId = genreData.results[0].genre_id;
-        match(genreId);
-      }) 
-    }
-  });
 };
 
 //match to alcohol
