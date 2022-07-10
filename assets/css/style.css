@@ -1,42 +1,30 @@
 .hero {
-
-    background-color: #BF0603;
-
+  background-color: #bf0603;
 }
 
 .card-header-title {
-
-    background-color: #888585;
-
-    color: #8D0801;
-
+  background-color: #888585;
+  color: #8d0801;
 }
 
-
 .thanks-container {
-
-    background-color: #BF0603;
-
-    color: #8D0801;
-
+  background-color: #bf0603;
+  color: #8d0801;
 }
 
 .button {
-
-    color: #BF0603;
-
+  color: #bf0603;
 }
 
-title, h1, h2, h3, h4 {
-
-    font-family: Bebas neue;
-
-    text-shadow: 0 0 15px rgba(0, 0, 0, .6);
-
+title,
+h1,
+h2,
+h3,
+h4 {
+  font-family: Bebas neue;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
 }
 
 label {
-
-    font-family: Bebas neue;
-
+  font-family: Bebas neue;
 }

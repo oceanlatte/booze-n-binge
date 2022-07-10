@@ -73,9 +73,7 @@ function match(genreId) {
     drinkChooser("gin") }              
   else {
     drinkChooser("sweet vermouth") }  
-  }
-
-
+};
 
 // once they choose a movie genre then the cocktail functions will be ran
 function drinkChooser(drink) {
@@ -147,7 +145,7 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
     .attr("src", image);
   
   var ingredientsHeader = $("<h4>")
-    .text("ingredients:");
+    .text("Ingredients:");
 
   var ingredientsContainer = $("<ul>");
 
