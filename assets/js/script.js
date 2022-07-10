@@ -25,6 +25,8 @@ function chooseMovie(movieTitle) {
           console.log("movie id: ",movieId)
           
           movieGenre(movieId);
+          localStorage.setItem("savedMovie", movieTitle);
+          displayDrink(movieTitle);
         }) 
       }
   });
@@ -96,6 +98,7 @@ function drinkChooser(drink) {
 
           // drinkId to pass through drink information function
           drinkInfo(drinkId);
+
         }) 
       }// end if statment
   });
@@ -103,8 +106,7 @@ function drinkChooser(drink) {
 
 // use drinkId from drinkChooser function to get that specific drink's information
 function drinkInfo(drinkId) {
-  var drinkById = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + drinkId;
-
+  var drinkById = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + drinkId;  
   fetch(drinkById)
     .then(function(response){
       if(response.ok) {
@@ -127,6 +129,9 @@ function drinkInfo(drinkId) {
           var instructions = data.drinks[0].strInstructions;
 
           drinkDisplayer(chosenDrink, drinkImage, results, instructions); 
+
+          localStorage.setItem("savedTitle", chosenDrink);
+          displayDrink(chosenDrink);
         })
       }// end if statment
     });
@@ -177,4 +182,13 @@ $(".button").click(function (event) {
     movieTitle = "";
   }
 });
+
+//display saved
+function displayDrink(savedDrink) {
+  var savedDrink = localStorage.getItem("savedTitle");
+  var savedMovie = localStorage.getItem("savedMovie")
+  var pair = savedMovie + " & " + savedDrink
+  console.log(pair); 
+  $(".column ul").append("<li>" +  pair + "</li>");
+}
 
