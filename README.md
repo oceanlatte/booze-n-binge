@@ -1,4 +1,4 @@
-# stranger-code
+# Booze N Binge
 
 ## Purpose
 
@@ -6,7 +6,7 @@ To build a drink generator that allows the user to receive a drink recipe based 
 
 ## Description
 
-We created an app that allows users to type in what they are going to watch on netflix and it generates a recipe based on the genre of the movie.  
+We created an app that allows users to type in what they are going to watch on netflix and it generates a drink recipe based on the genre of the movie. We used a netflix and a drink API to pair movie genres with alcohol. E.g. whiskey is paired with action adventure. An image of the movie poster and the drink are displayed along with the ingredients and the instructions on how to make the drink. Your past pairings are saved at the bottom of the page using local storage. 
 
 
 
@@ -15,6 +15,7 @@ We created an app that allows users to type in what they are going to watch on n
 * CSS
 * Javascript
 * Bulma
+* Cloudflare
 * unosNG API: https://rapidapi.com/unogs/api/unogsng
 * The Cocktail DB API: https://www.thecocktaildb.com/api.php
 
@@ -27,7 +28,7 @@ We created an app that allows users to type in what they are going to watch on n
 ![]()
 
 ## Website
-enter when published
+https://oceanlatte.github.io/booze-n-binge/
 
 ## contribution
 Made with ❤️ by Ocean Veliz, Eric Schweitzer, Gestan Joshua, and Ava Sczygelski 
