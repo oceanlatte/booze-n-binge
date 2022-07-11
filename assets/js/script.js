@@ -13,7 +13,7 @@ var keyAndHost = {
 
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
-
+  localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
   fetch(movieSearch, keyAndHost)
     .then(function (response) {
       if (response.ok) {
@@ -156,8 +156,8 @@ function drinkInfo(drinkId) {
             var instructions = data.drinks[0].strInstructions;
 
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-
-            localStorage.setItem("savedTitle", chosenDrink);
+    
+            localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
             displayDrink(chosenDrink);
           })
       }// end if statment
@@ -212,9 +212,9 @@ $(".button").click(function (event) {
 
 //display saved
 function displayDrink(savedDrink) {
-  var savedDrink = localStorage.getItem("savedTitle");
-  var savedMovie = localStorage.getItem("savedMovie")
-  var pair = savedMovie + " & " + savedDrink
+  var chosenDrink = localStorage.getItem("savedTitle");
+  var movieTitle = localStorage.getItem("savedMovie")
+  var pair = movieTitle + " & " + chosenDrink
   console.log(pair);
   $(".saved ul").append("<li>" + pair + "</li>");
 }
