@@ -197,6 +197,18 @@ function displayDrink(savedDrink) {
   $(".column ul").append("<li>" +  pair + "</li>");
 }
 // reset forms after second search 
+// function resetForm() {
+//   document.getElementById("drinkCard").reset();
+// }
+// resetForm()
 function resetForm() {
-  document.getElementById("myForm").reset();
+  document.getElementById("drinkCard").value = "";
 }
+// resetForm()
+// var inputEnter = document.getElementById("input");
+// inputEnter.addEventListener("keypress", function(event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     document.getElementById("submit").click();
+//   }
+// });
