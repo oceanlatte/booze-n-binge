@@ -43,9 +43,14 @@ function displayMovie(movieTitle, movieData) {
       movieInfoEl.append(displayTitle);
 
       // display correct poster
+      var posterContainer = $("<div>")
+      .addClass("is-flex is-justify-content-center");
+
       var displayPoster = $("<img>")
-      .attr("src", movieData.results[i].poster);
-      movieInfoEl.append(displayPoster);
+      .attr("src", movieData.results[i].poster)
+      .addClass("is-centered");
+      posterContainer.append(displayPoster);
+      movieInfoEl.append(posterContainer);
 
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
@@ -100,7 +105,6 @@ function drinkChooser(drink) {
 
           // drinkId to pass through drink information function
           drinkInfo(drinkId);
-
         }) 
       }// end if statment
   });
