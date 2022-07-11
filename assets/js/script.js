@@ -216,6 +216,6 @@ function displayDrink(savedDrink) {
   var savedMovie = localStorage.getItem("savedMovie")
   var pair = savedMovie + " & " + savedDrink
   console.log(pair);
-  $(".column ul").append("<li>" + pair + "</li>");
+  $(".saved ul").append("<li>" + pair + "</li>");
 }
 
