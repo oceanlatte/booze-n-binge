@@ -197,14 +197,18 @@ function displayDrink(savedDrink) {
   $(".column ul").append("<li>" +  pair + "</li>");
 }
 // reset forms after second search 
+// this comes up with an error move to function 
 // function resetForm() {
 //   document.getElementById("drinkCard").reset();
 // }
 // resetForm()
-function resetForm() {
-  document.getElementById("drinkCard").value = "";
-}
-// resetForm()
+// function resetForm() {
+//   document.getElementById("drinkCard").value = "";
+// }
+// resetForm() 
+
+
+
 // var inputEnter = document.getElementById("input");
 // inputEnter.addEventListener("keypress", function(event) {
 //   if (event.key === "Enter") {
