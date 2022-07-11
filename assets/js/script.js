@@ -1,4 +1,5 @@
 var movieTitle = document.querySelector(".input").textContent;
+var searchEl = document.querySelector("#movie-search");
 
 // host and key in one varialble 
 var keyAndHost = {
@@ -27,6 +28,23 @@ function chooseMovie(movieTitle) {
           movieGenre(movieId);
           localStorage.setItem("savedMovie", movieTitle);
           displayDrink(movieTitle);
+
+          if (movieTitle === movieData.results.title) {
+            chooseMovie(movieTitle);
+            movieTitle = "";
+          }
+          else {
+        
+            var errorMsg = document.createElement("p");
+        
+            console.log(errorMsg);
+        
+            errorMsg.className = "help";
+        
+            errorMsg.textContent = "Title not available on Netflix";
+        
+            (searchEl).append.errorMsg;
+          };
         }) 
       }
   });
@@ -177,10 +195,8 @@ $(".button").click(function (event) {
   movieTitle = $(this).siblings(".input").val().trim();
   console.log(movieTitle);
 
-  if (movieTitle) {
-    chooseMovie(movieTitle);
-    movieTitle = "";
-  }
+ 
+
 });
 
 //display saved
