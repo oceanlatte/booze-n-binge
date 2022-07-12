@@ -196,6 +196,7 @@ function displayDrink(savedDrink) {
   console.log(pair); 
   $(".column ul").append("<li>" +  pair + "</li>");
 }
+
 // reset forms after second search 
 // will need to pull from develop to add new features 
 // this comes up with an error move to function 
