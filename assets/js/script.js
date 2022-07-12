@@ -159,7 +159,8 @@ function drinkInfo(drinkId) {
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
     
             localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
-            displayDrink(chosenDrink);
+            //displayDrink(chosenDrink, movieTitle);
+            displayDrink()
           })
       }// end if statment
     });
@@ -210,30 +211,25 @@ $(".button").click(function (event) {
 
 
 });
-
-//display saved
-function displayDrink(savedDrink) {
+displayDrink()
+function displayDrink() {
   var chosenDrink = localStorage.getItem("savedTitle");
   var movieTitle = localStorage.getItem("savedMovie")
   var pair = movieTitle + " & " + chosenDrink
-  var savedpair = [{
-    movie:movieTitle,
-    drink:chosenDrink,
+  console.log(pair)
 
-    // var pairs = function() {
-    //   localStorage.setItem("pairs", JSON.stringify(savedpair))
-    
-    // pairs = localStorage.getItem("pairs")
-    // pairs = JSON.parse(pairs);
+    localStorage.setItem("savedpair", JSON.stringify(pair))
+    //var savedpair = [];
+    pairs = localStorage.getItem("savedpair");
+    console.log(pairs);
   
     // for (let i = 0; i < pairs; i++) {
     //   pairs[i] = array[i];
     // }
     
-    // $(".saved ul").append("<li>" + pairs[i] + "</li>");
+    $(".saved ul").append("<li>" + pairs + "</li>");
   
-  
-  }]
+  }
 
- };
+
 
