@@ -215,7 +215,25 @@ function displayDrink(savedDrink) {
   var chosenDrink = localStorage.getItem("savedTitle");
   var movieTitle = localStorage.getItem("savedMovie")
   var pair = movieTitle + " & " + chosenDrink
-  console.log(pair);
+  var savedpair = [{
+    movie:movieTitle,
+    drink:chosenDrink,
+  }]
+
+  var savedpairs = function() {
+    localStorage.setItem("pairs", JSON.stringify(savedpair))
+  };
+  pairs = localStorage.getItem("pairs")
+  pairs = JSON.parse(pairs);
+
+  for (let i = 0; i < pairs.length; i++) {
+    pairs[i] = array[i];
+  }
+  
+  
+  console.log(savedpair);
+
+  
   $(".saved ul").append("<li>" + pair + "</li>");
 }
 
