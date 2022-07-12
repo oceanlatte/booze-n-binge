@@ -2,7 +2,7 @@ var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
 
-// host and key in one varialble 
+// host and key in one variable 
 var keyAndHost = {
   method: "GET",
   headers: {
@@ -18,9 +18,23 @@ function chooseMovie(movieTitle) {
     .then(function (response) {
       if (response.ok) {
         response.json()
-          .then(function (movieData) {
-            displayMovie(movieTitle, movieData);
-          })
+        .then(function(movieData){
+          console.log("this is the movie data: ", movieData);
+          //  capture image and netflix id data
+          var movieImage = movieData.results[0].img;
+          console.log(movieImage);
+          var movieId = movieData.results[0].netflix_id;
+          console.log("movie id: ",movieId)
+          
+          movieGenre(movieId);
+          localStorage.setItem("savedMovie", movieTitle);
+          displayDrink(movieTitle);
+          
+          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
+          // if(movieData === '0') {
+          //   alert("Not a Valid Choice")
+          // } 
+        }) 
       }
     });
 };
@@ -58,9 +72,14 @@ function displayMovie(movieTitle, movieData) {
       movieInfoEl.append(displayTitle);
 
       // display correct poster
+      var posterContainer = $("<div>")
+      .addClass("is-flex is-justify-content-center");
+
       var displayPoster = $("<img>")
-        .attr("src", movieData.results[i].poster);
-      movieInfoEl.append(displayPoster);
+      .attr("src", movieData.results[i].poster)
+      .addClass("is-centered");
+      posterContainer.append(displayPoster);
+      movieInfoEl.append(posterContainer);
 
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
@@ -126,10 +145,9 @@ function drinkChooser(drink) {
             var drinkId = drinkData.drinks[randomizer].idDrink;
             console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
 
-            // drinkId to pass through drink information function
-            drinkInfo(drinkId);
-
-          })
+          // drinkId to pass through drink information function
+          drinkInfo(drinkId);
+        }) 
       }// end if statment
     });
 }
@@ -226,6 +244,3 @@ function displayDrink() {
     $(".saved ul").append("<li>" + pairs + "</li>");
 
 };
-
-
-
