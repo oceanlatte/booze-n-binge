@@ -255,4 +255,4 @@ function displayDrink(savedDrink) {
 //     event.preventDefault();
 //     document.getElementById("submit").click();
 //   }
-// });
+// }); new
