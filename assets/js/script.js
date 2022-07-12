@@ -72,6 +72,7 @@ function displayMovie(movieTitle, movieData) {
 
 //match to alcohol
 function match(genreId) {
+  console.log(genreId)
   if (genreId === 783 || genreId === 4370) { // children and family or sports 
     drinkChooser("beer")
   }
@@ -218,22 +219,21 @@ function displayDrink(savedDrink) {
   var savedpair = [{
     movie:movieTitle,
     drink:chosenDrink,
+
+    // var pairs = function() {
+    //   localStorage.setItem("pairs", JSON.stringify(savedpair))
+    
+    // pairs = localStorage.getItem("pairs")
+    // pairs = JSON.parse(pairs);
+  
+    // for (let i = 0; i < pairs; i++) {
+    //   pairs[i] = array[i];
+    // }
+    
+    // $(".saved ul").append("<li>" + pairs[i] + "</li>");
+  
+  
   }]
 
-  var savedpairs = function() {
-    localStorage.setItem("pairs", JSON.stringify(savedpair))
-  };
-  pairs = localStorage.getItem("pairs")
-  pairs = JSON.parse(pairs);
-
-  for (let i = 0; i < pairs.length; i++) {
-    pairs[i] = array[i];
-  }
-  
-  
-  console.log(savedpair);
-
-  
-  $(".saved ul").append("<li>" + pair + "</li>");
-}
+ };
 
