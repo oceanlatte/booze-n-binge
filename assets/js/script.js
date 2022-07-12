@@ -219,17 +219,13 @@ function displayDrink() {
   console.log(pair)
 
     localStorage.setItem("savedpair", JSON.stringify(pair))
-    //var savedpair = [];
+
     pairs = localStorage.getItem("savedpair");
     console.log(pairs);
-  
-    // for (let i = 0; i < pairs; i++) {
-    //   pairs[i] = array[i];
-    // }
     
     $(".saved ul").append("<li>" + pairs + "</li>");
-  
-  }
+
+};
 
 
 
