@@ -2,7 +2,7 @@ var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
 
-// host and key in one varialble 
+// host and key in one variable 
 var keyAndHost = {
   method: "GET",
   headers: {
@@ -18,9 +18,23 @@ function chooseMovie(movieTitle) {
     .then(function (response) {
       if (response.ok) {
         response.json()
-          .then(function (movieData) {
-            displayMovie(movieTitle, movieData);
-          })
+        .then(function(movieData){
+          console.log("this is the movie data: ", movieData);
+          //  capture image and netflix id data
+          var movieImage = movieData.results[0].img;
+          console.log(movieImage);
+          var movieId = movieData.results[0].netflix_id;
+          console.log("movie id: ",movieId)
+          
+          movieGenre(movieId);
+          localStorage.setItem("savedMovie", movieTitle);
+          displayDrink(movieTitle);
+          
+          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
+          // if(movieData === '0') {
+          //   alert("Not a Valid Choice")
+          // } 
+        }) 
       }
     });
 };
@@ -219,3 +233,26 @@ function displayDrink(savedDrink) {
   $(".column ul").append("<li>" + pair + "</li>");
 }
 
+// reset forms after second search 
+// will need to pull from develop to add new features 
+// this comes up with an error move to function 
+
+// function resetForm() {
+//   document.getElementById("drinkCard").reset();
+// }
+// resetForm()
+
+// function resetForm() {
+//   document.getElementById("drinkCard").value = "";
+// }
+// resetForm() 
+
+
+// found while researching. used to use "enter" key as well as search button 
+// var inputEnter = document.getElementById("input");
+// inputEnter.addEventListener("keypress", function(event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     document.getElementById("submit").click();
+//   }
+// });
