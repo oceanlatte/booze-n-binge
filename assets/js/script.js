@@ -14,23 +14,16 @@ var keyAndHost = {
 //Getting the movie from the API
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
-  localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
+  
   fetch(movieSearch, keyAndHost)
     .then(function (response) {
       if (response.ok) {
         response.json()
         .then(function (movieData) {
           displayMovie(movieTitle, movieData);
-        })
-        .then(function(movieData){
-          //  capture image and netflix id data
-          var movieImage = movieData.results[0].img;
-          var movieId = movieData.results[0].netflix_id;
-          localStorage.setItem("savedMovie", movieTitle);
-          displayDrink();
         }) 
       };
-    });
+  });
 };
 
 // find correct movie index to bring up correct poster
@@ -64,6 +57,8 @@ function displayMovie(movieTitle, movieData) {
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
+      localStorage.setItem("savedMovie", movieTitle);
+      displayStorage();
     };
   };
 };
@@ -146,9 +141,7 @@ function drinkInfo(drinkId) {
             });
             var instructions = data.drinks[0].strInstructions;
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-            localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
-            //displayDrink(chosenDrink, movieTitle);
-            displayDrink()
+            localStorage.setItem("savedTitle", chosenDrink);
           });
       };
     });
@@ -190,13 +183,12 @@ $(".button").click(function (event) {
 });
 
 //Getting and Displaying Previous Drink and Movie Pairings from Local Storage
-displayDrink()
-function displayDrink() {
-  var chosenDrink = localStorage.getItem("savedTitle");
-  var chosenDrink2= JSON.parse(chosenDrink);
-  var movieTitle = localStorage.getItem("savedMovie");
-  var movieTitle2 = JSON.parse(movieTitle);
-  var pair = movieTitle2 + " & " + chosenDrink2
+function displayStorage() {
+  var savedDrink = localStorage.getItem("savedTitle");
+  var savedTitle = localStorage.getItem("savedMovie");
+  console.log(savedDrink, savedTitle);
+  
+  var pair = savedTitle + " & " + savedDrink
     localStorage.setItem("savedpair", JSON.stringify(pair))
     pairs = localStorage.getItem("savedpair");
     $(".saved ul").append("<li>" + pairs + "</li>");
