@@ -174,19 +174,19 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
   displayDrink.append(displayTitle, displayImage, ingredientsHeader, ingredientsContainer, instructionsHeader, displayInstructions);
 }
 
-// Button click for submit movie search
-$(".button").click(function (event) {
+// // Button click for submit movie search
+// $(".button").click(function (event) {
 
-  event.preventDefault();
+//   event.preventDefault();
 
-  movieTitle = $(this).siblings(".input").val().trim();
-  console.log(movieTitle);
+//   movieTitle = $(this).siblings(".input").val().trim();
+//   console.log(movieTitle);
 
-  if (movieTitle) {
-    chooseMovie(movieTitle);
-    movieTitle = "";
-  }
-});
+//   if (movieTitle) {
+//     chooseMovie(movieTitle);
+//     movieTitle = "";
+//   }
+// });
 
 //display saved
 function displayDrink(savedDrink) {
@@ -210,5 +210,6 @@ $(".button").click(function(event) {
 
   movieTitle = $(this).siblings(".input").val().trim();
   chooseMovie(movieTitle)
-  displayStorage();
+
+  displayStorage(); 
 });
