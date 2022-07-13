@@ -14,20 +14,22 @@ var keyAndHost = {
 //Getting the movie from the API
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
-  localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
+
   fetch(movieSearch, keyAndHost)
     .then(function (response) {
       if (response.ok) {
         response.json()
-        .then(function (movieData) {
-          displayMovie(movieTitle, movieData);
-        })
         .then(function(movieData){
           //  capture image and netflix id data
           var movieImage = movieData.results[0].img;
           var movieId = movieData.results[0].netflix_id;
           localStorage.setItem("savedMovie", movieTitle);
-          displayDrink();
+          displayDrink(movieTitle);
+          
+          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
+          // if(movieData === '0') {
+          //   alert("Not a Valid Choice")
+          // } 
         }) 
       };
     });
@@ -70,7 +72,6 @@ function displayMovie(movieTitle, movieData) {
 
 //match to alcohol
 function match(genreId) {
-  console.log(genreId)
   if (genreId === 783 || genreId === 4370) { // children and family or sports 
     drinkChooser("beer")
   }
@@ -202,3 +203,12 @@ function displayDrink() {
     $(".saved ul").append("<li>" + pairs + "</li>");
 };
 
+
+// found while researching. used to use "enter" key as well as search button 
+// var inputEnter = document.getElementById("input");
+// inputEnter.addEventListener("keypress", function(event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     document.getElementById("submit").click();
+//   }
+// }); new
