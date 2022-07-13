@@ -23,7 +23,6 @@ function chooseMovie(movieTitle) {
         response.json()
         .then(function (movieData) {
           displayMovie(movieTitle, movieData);
-          console.log(movieTitle);
         }) 
       } 
   })
