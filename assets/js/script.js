@@ -26,14 +26,9 @@ function chooseMovie(movieTitle) {
           var movieId = movieData.results[0].netflix_id;
           console.log("movie id: ",movieId)
           
-          movieGenre(movieId);
+          displayMovie();
           localStorage.setItem("savedMovie", movieTitle);
-          displayDrink(movieTitle);
-          
-          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
-          // if(movieData === '0') {
-          //   alert("Not a Valid Choice")
-          // } 
+          displayDrink();
         }) 
       }
     });
@@ -178,6 +173,7 @@ function drinkInfo(drinkId) {
     
             localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
             //displayDrink(chosenDrink, movieTitle);
+            console.log(chosenDrink)
             displayDrink()
           })
       }// end if statment
