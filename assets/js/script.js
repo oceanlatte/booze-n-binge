@@ -23,9 +23,10 @@ function chooseMovie(movieTitle) {
         response.json()
         .then(function (movieData) {
           displayMovie(movieTitle, movieData);
+          console.log(movieTitle);
         }) 
       } 
-  });
+  })
 };
 
 // find correct movie index to bring up correct poster
@@ -112,7 +113,6 @@ function drinkChooser(drink) {
             // use get a random index for which drink to choose
             var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
             // get drink name and drink ID #
-            var drinkName = drinkData.drinks[randomizer].strDrink;
             var drinkId = drinkData.drinks[randomizer].idDrink;
           // drinkId to pass through drink information function
           drinkInfo(drinkId);
@@ -179,6 +179,10 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
 // Button click for submit movie search
 $(".button").click(function (event) {
   event.preventDefault();
+
+  $(".movie-info").empty();
+  $(".drink-container").empty();
+  $("#storage-container").empty();
   
   var hiddenEl = document.querySelector("#hidden");
   hiddenEl.setAttribute("style", "visibility: visible");
@@ -188,7 +192,6 @@ $(".button").click(function (event) {
   
   movieTitle = $(this).siblings(".input").val().trim();
   chooseMovie(movieTitle);
-  
   displayStorage();
 });
 
@@ -198,23 +201,32 @@ function saveStorage() {
     movie: currentPairArr[0],
     drink: currentPairArr[1]
   });
+  // reset pairs array to be empty on next search
+  currentPairArr = [];
 
   // save formatted data to localStorage
   localStorage.setItem("previousPairing", JSON.stringify(storagePairs));
-}
+};
 
 //Getting and Displaying Previous Drink and Movie Pairings from Local Storage
 function displayStorage() {
-  var savedPairArr = JSON.parse(localStorage.getItem("previousPairing"));
+  if (!localStorage) {
+    return;
+  } 
+  else {
+    var savedPairArr = JSON.parse(localStorage.getItem("previousPairing"));
+  }
+ 
   // display to Previous Pairings
-  if (savedPairArr === null ) {
+  if (savedPairArr == null || savedPairArr == "" ) {
     return;
   }
   else {
-    for (var i = 0; i < savedPairArr.length; i++)
-    var displayPair = $("<li>")
-    .text(savedPairArr[i].movie + " & " + savedPairArr[i].drink);
-    $("#storage-container").append(displayPair);
+    for (var i = 0; i < savedPairArr.length; i++) {
+      var displayPair = $("<li>")
+      .text(savedPairArr[i].movie + " & " + savedPairArr[i].drink);
+      $("#storage-container").append(displayPair);
+    }
   }
 };
 
