@@ -11,6 +11,7 @@ var keyAndHost = {
   }
 };
 
+//Getting the movie from the API
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
   localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
@@ -18,74 +19,58 @@ function chooseMovie(movieTitle) {
     .then(function (response) {
       if (response.ok) {
         response.json()
+        .then(function (movieData) {
+          displayMovie(movieTitle, movieData);
+        })
         .then(function(movieData){
-          console.log("this is the movie data: ", movieData);
           //  capture image and netflix id data
           var movieImage = movieData.results[0].img;
-          console.log(movieImage);
           var movieId = movieData.results[0].netflix_id;
-          console.log("movie id: ",movieId)
-          
-          movieGenre(movieId);
           localStorage.setItem("savedMovie", movieTitle);
-          displayDrink(movieTitle);
-          
-          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
-          // if(movieData === '0') {
-          //   alert("Not a Valid Choice")
-          // } 
+          displayDrink();
         }) 
-      }
+      };
     });
 };
 
 // find correct movie index to bring up correct poster
 function displayMovie(movieTitle, movieData) {
-  console.log("this is all the results for: ", movieTitle, movieData.results);
   var movieInfoEl = $(".movie-info");
-  console.log(movieData)
+  //error message for invalid movie title
   if (movieData.results === null || !movieData) {
-
     var errorMsg = document.createElement("p");
-
-    console.log(errorMsg);
-
     errorMsg.className = "help is-danger";
-
     errorMsg.textContent = "Title not available on Netflix";
-
     movieInfoEl.append(errorMsg);
-
   };
 
   for (var i = 0; i < movieData.results.length; i++) {
-
     var findMovie = movieData.results[i].title;
     if (findMovie.toLowerCase() == movieTitle.toLowerCase()) {
-
       //display searched title
       var displayTitle = $("<h3>")
         .addClass("is-size-5")
         .text(movieTitle + " is available!")
         ;
-
       movieInfoEl.append(displayTitle);
-
       // display correct poster
+      var posterContainer = $("<div>")
+      .addClass("is-flex is-justify-content-center");
       var displayPoster = $("<img>")
-        .attr("src", movieData.results[i].poster);
-      movieInfoEl.append(displayPoster);
-
+      .attr("src", movieData.results[i].poster)
+      .addClass("is-centered");
+      posterContainer.append(displayPoster);
+      movieInfoEl.append(posterContainer);
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
-    }
-  }
-
+    };
+  };
 };
 
 //match to alcohol
 function match(genreId) {
+  console.log(genreId)
   if (genreId === 783 || genreId === 4370) { // children and family or sports 
     drinkChooser("beer")
   }
@@ -129,20 +114,14 @@ function drinkChooser(drink) {
       if (response.ok) {
         response.json()
           .then(function (drinkData) {
-            console.log(drinkData, "all drink options for " + drink + " fetched");
-
             // use get a random index for which drink to choose
             var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
-
             // get drink name and drink ID #
             var drinkName = drinkData.drinks[randomizer].strDrink;
             var drinkId = drinkData.drinks[randomizer].idDrink;
-            console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
-
-            // drinkId to pass through drink information function
-            drinkInfo(drinkId);
-
-          })
+          // drinkId to pass through drink information function
+          drinkInfo(drinkId);
+        }) 
       }// end if statment
     });
 }
@@ -158,119 +137,68 @@ function drinkInfo(drinkId) {
             var chosenDrink = data.drinks[0].strDrink;
             var drinkImage = data.drinks[0].strDrinkThumb;
             let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient3, data.drinks[0].strIngredient4, data.drinks[0].strIngredient5, data.drinks[0].strIngredient6, data.drinks[0].strIngredient7, data.drinks[0].strIngredient8, data.drinks[0].strIngredient9, data.drinks[0].strIngredient10, data.drinks[0].strIngredient11, data.drinks[0].strIngredient12, data.drinks[0].strIngredient13, data.drinks[0].strIngredient14, data.drinks[0].strIngredient15)
-
             //results will give only valid ingredients
             let results = []
             ingredientarray.forEach(element => {
               if (element !== null || element == "") {
                 results.push(element)
               }
-            })
-
+            });
             var instructions = data.drinks[0].strInstructions;
-
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-    
             localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
-            displayDrink(chosenDrink);
-          })
-      }// end if statment
+            //displayDrink(chosenDrink, movieTitle);
+            displayDrink()
+          });
+      };
     });
 };
-
 
 // display cocktal information to page
 function drinkDisplayer(drink, image, ingredients, instructions) {
   var displayDrink = $(".drink-container");
-
+  //Name
   var displayTitle = $("<h3>")
     .addClass("is-size-5")
     .text(drink);
-
+  //Image
   var displayImage = $("<img>")
     .attr("src", image);
-
+  //Ingredients
   var ingredientsHeader = $("<h4>")
     .text("Ingredients:");
-
   var ingredientsContainer = $("<ul>");
-
   for (var i = 0; i < ingredients.length; i++) {
     var displayingredients = $("<li>").text(ingredients[i]);
     ingredientsContainer.append(displayingredients);
   }
-
+  //Instructions
   var instructionsHeader = $("<h4>")
     .addClass("mt-2")
     .text("Instructions: ");
-
   var displayInstructions = $("<p>")
     .text(instructions);
-
+  //Adding cocktail information to card
   displayDrink.append(displayTitle, displayImage, ingredientsHeader, ingredientsContainer, instructionsHeader, displayInstructions);
 }
 
 // Button click for submit movie search
 $(".button").click(function (event) {
-
   event.preventDefault();
-
   movieTitle = $(this).siblings(".input").val().trim();
-  console.log(movieTitle);
-
   chooseMovie(movieTitle);
-
-
-
 });
 
-//display saved
-function displayDrink(savedDrink) {
+//Getting and Displaying Previous Drink and Movie Pairings from Local Storage
+displayDrink()
+function displayDrink() {
   var chosenDrink = localStorage.getItem("savedTitle");
-  var movieTitle = localStorage.getItem("savedMovie")
-  var pair = movieTitle + " & " + chosenDrink
-  var savedpair = [{
-    movie:movieTitle,
-    drink:chosenDrink,
-  }]
+  var chosenDrink2= JSON.parse(chosenDrink);
+  var movieTitle = localStorage.getItem("savedMovie");
+  var movieTitle2 = JSON.parse(movieTitle);
+  var pair = movieTitle2 + " & " + chosenDrink2
+    localStorage.setItem("savedpair", JSON.stringify(pair))
+    pairs = localStorage.getItem("savedpair");
+    $(".saved ul").append("<li>" + pairs + "</li>");
+};
 
-  var savedpairs = function() {
-    localStorage.setItem("pairs", JSON.stringify(savedpair))
-  };
-  pairs = localStorage.getItem("pairs")
-  pairs = JSON.parse(pairs);
-
-  for (let i = 0; i < pairs.length; i++) {
-    pairs[i] = array[i];
-  }
-  
-  
-  console.log(savedpair);
-
-  
-  $(".saved ul").append("<li>" + pair + "</li>");
-}
-
-// reset forms after second search 
-// will need to pull from develop to add new features 
-// this comes up with an error move to function 
-
-// function resetForm() {
-//   document.getElementById("drinkCard").reset();
-// }
-// resetForm()
-
-// function resetForm() {
-//   document.getElementById("drinkCard").value = "";
-// }
-// resetForm() 
-
-
-// found while researching. used to use "enter" key as well as search button 
-// var inputEnter = document.getElementById("input");
-// inputEnter.addEventListener("keypress", function(event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     document.getElementById("submit").click();
-//   }
-// });
