@@ -227,11 +227,15 @@ $(".button").click(function (event) {
 
 });
 
+//Getting and Displaying Previous Drink and Movie Pairings from Local Storage
 displayDrink()
 function displayDrink() {
   var chosenDrink = localStorage.getItem("savedTitle");
-  var movieTitle = localStorage.getItem("savedMovie")
-  var pair = movieTitle + " & " + chosenDrink
+  var chosenDrink2= JSON.parse(chosenDrink);
+  var movieTitle = localStorage.getItem("savedMovie");
+  var movieTitle2 = JSON.parse(movieTitle);
+  var pair = movieTitle2 + " & " + chosenDrink2
+
   console.log(pair)
 
     localStorage.setItem("savedpair", JSON.stringify(pair))
@@ -240,6 +244,5 @@ function displayDrink() {
     console.log(pairs);
     
     $(".saved ul").append("<li>" + pairs + "</li>");
-
 };
 
