@@ -1,7 +1,7 @@
 var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
-var pairs = [];
+var storagePairs = [];
 var pairsArr = [];
 
 // host and key in one variable 
@@ -190,32 +190,32 @@ $(".button").click(function (event) {
 });
 
 function saveStorage() {
-  console.log(pairsArr);
-
-  pairs.push({
+  // format data to new array for localStorage
+  storagePairs.push({
     movie: pairsArr[0],
     drink: pairsArr[1]
   });
-  console.log(pairs, "pairs pushed from storage array")
+  console.log(storagePairs, "pairs pushed from storage array")
+
+  // save formatted data to localStorage
+  localStorage.setItem("previousPairing", JSON.stringify(storagePairs));
 }
 
 //Getting and Displaying Previous Drink and Movie Pairings from Local Storage
 function displayStorage() {
-  var savedDrink = localStorage.getItem("savedTitle");
-  var savedTitle = localStorage.getItem("savedMovie");
+  var savedPairArr = JSON.parse(localStorage.getItem("previousPairing"));
 
-  var savedPair = {
-    movie: savedTitle,
-    drink: savedDrink
-  };
-
-  pairs.push(savedPair);
-  // push new object to local storage
-  localStorage.setItem("previousPairing", JSON.stringify(pairs));
-
+  console.log(savedPairArr, "get item storage");
+  console.log("current movie pair", pairsArr);
  
   // display to Previous Pairings
-  var displayPair = $("<li>")
-  .text(savedTitle + " & " + savedDrink);
-  $("#storage-container").append(displayPair);
+  if (savedPairArr === null ) {
+    return;
+  }
+  else {
+    for (var i = 0; i < savedPairArr.length; i++)
+    var displayPair = $("<li>")
+    .text(savedPairArr[i].movie + " & " + savedPairArr[i].drink);
+    $("#storage-container").append(displayPair);
+  }
 };
