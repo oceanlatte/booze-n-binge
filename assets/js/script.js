@@ -2,6 +2,7 @@ var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
 var pairs = [];
+var pairsArr = [];
 
 // host and key in one variable 
 var keyAndHost = {
@@ -23,7 +24,7 @@ function chooseMovie(movieTitle) {
         .then(function (movieData) {
           displayMovie(movieTitle, movieData);
         }) 
-      };
+      } 
   });
 };
 
@@ -45,7 +46,7 @@ function displayMovie(movieTitle, movieData) {
       var displayTitle = $("<h3>")
         .addClass("is-size-5")
         .text(movieTitle + " is available!")
-        ;
+      ;
       movieInfoEl.append(displayTitle);
       // display correct poster
       var posterContainer = $("<div>")
@@ -58,7 +59,7 @@ function displayMovie(movieTitle, movieData) {
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
-      localStorage.setItem("savedMovie", movieTitle);
+      pairsArr.push(movieTitle);
     };
   };
 };
@@ -141,8 +142,8 @@ function drinkInfo(drinkId) {
             });
             var instructions = data.drinks[0].strInstructions;
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-            localStorage.setItem("savedTitle", chosenDrink);
-            displayStorage();
+            pairsArr.push(chosenDrink);
+            saveStorage();
           })
       };
     });
@@ -179,15 +180,29 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
 // Button click for submit movie search
 $(".button").click(function (event) {
   event.preventDefault();
+  
+  var hiddenEl = document.querySelector("#hidden");
+  hiddenEl.setAttribute("style", "visibility: visible");
   movieTitle = $(this).siblings(".input").val().trim();
   chooseMovie(movieTitle);
+
+  displayStorage();
 });
+
+function saveStorage() {
+  console.log(pairsArr);
+
+  pairs.push({
+    movie: pairsArr[0],
+    drink: pairsArr[1]
+  });
+  console.log(pairs, "pairs pushed from storage array")
+}
 
 //Getting and Displaying Previous Drink and Movie Pairings from Local Storage
 function displayStorage() {
   var savedDrink = localStorage.getItem("savedTitle");
   var savedTitle = localStorage.getItem("savedMovie");
-  console.log(savedDrink, savedTitle);
 
   var savedPair = {
     movie: savedTitle,
@@ -195,17 +210,12 @@ function displayStorage() {
   };
 
   pairs.push(savedPair);
-
+  // push new object to local storage
   localStorage.setItem("previousPairing", JSON.stringify(pairs));
 
+ 
+  // display to Previous Pairings
   var displayPair = $("<li>")
   .text(savedTitle + " & " + savedDrink);
-
   $("#storage-container").append(displayPair);
-  
-  // var pair = savedTitle + " & " + savedDrink
-  //   localStorage.setItem("savedpair", JSON.stringify(pair))
-  //   pairs = localStorage.getItem("savedpair");
-  //   $(".saved ul").append("<li>" + pairs + "</li>");
 };
-
