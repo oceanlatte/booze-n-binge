@@ -197,26 +197,11 @@ function displayDrink(savedDrink) {
   $(".column ul").append("<li>" +  pair + "</li>");
 }
 
-// reset forms after second search 
-// will need to pull from develop to add new features 
-// this comes up with an error move to function 
+$(".button").click(function(event) {
+  event.preventDefault();
 
-// function resetForm() {
-//   document.getElementById("drinkCard").reset();
-// }
-// resetForm()
+  var hiddenEl = document.querySelector("#hidden");
+  hiddenEl.setAttribute("style", "visibility: visible");
+}
 
-// function resetForm() {
-//   document.getElementById("drinkCard").value = "";
-// }
-// resetForm() 
-
-
-// found while researching. used to use "enter" key as well as search button 
-// var inputEnter = document.getElementById("input");
-// inputEnter.addEventListener("keypress", function(event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     document.getElementById("submit").click();
-//   }
-// });
+)
