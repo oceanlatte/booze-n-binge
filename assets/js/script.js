@@ -18,6 +18,9 @@ function chooseMovie(movieTitle) {
     .then(function (response) {
       if (response.ok) {
         response.json()
+        .then(function (movieData) {
+          displayMovie(movieTitle, movieData);
+        })
         .then(function(movieData){
           console.log("this is the movie data: ", movieData);
           //  capture image and netflix id data
@@ -26,7 +29,6 @@ function chooseMovie(movieTitle) {
           var movieId = movieData.results[0].netflix_id;
           console.log("movie id: ",movieId)
           
-          displayMovie();
           localStorage.setItem("savedMovie", movieTitle);
           displayDrink();
         }) 
@@ -223,8 +225,8 @@ $(".button").click(function (event) {
   chooseMovie(movieTitle);
 
 
-
 });
+
 displayDrink()
 function displayDrink() {
   var chosenDrink = localStorage.getItem("savedTitle");
