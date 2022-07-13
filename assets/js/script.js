@@ -197,11 +197,18 @@ function displayDrink(savedDrink) {
   $(".column ul").append("<li>" +  pair + "</li>");
 }
 
+
+
 $(".button").click(function(event) {
   event.preventDefault();
 
   var hiddenEl = document.querySelector("#hidden");
   hiddenEl.setAttribute("style", "visibility: visible");
-}
 
-)
+  $(".movie-info").empty();
+  $(".drink-container").empty();
+
+  movieTitle = $(this).siblings(".input").val().trim();
+  chooseMovie(movieTitle)
+  displayStorage();
+});
