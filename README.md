@@ -24,8 +24,7 @@ We created an app that allows users to type in what they are going to watch on n
 ![](./assets/images/Screenshot%202022-07-13%20143301.png)
 ![](./assets/images/Screenshot%202022-07-13%20154158.png)
 ![](./assets/images/Screenshot%202022-07-13%20154830.png)
-![]()
-![]()
+
 
 ## Website
 https://oceanlatte.github.io/booze-n-binge/
