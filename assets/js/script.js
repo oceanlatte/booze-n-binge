@@ -13,14 +13,11 @@ var keyAndHost = {
 
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
-  localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
+
   fetch(movieSearch, keyAndHost)
     .then(function (response) {
       if (response.ok) {
         response.json()
-        .then(function (movieData) {
-          displayMovie(movieTitle, movieData);
-        })
         .then(function(movieData){
           console.log("this is the movie data: ", movieData);
           //  capture image and netflix id data
@@ -29,8 +26,14 @@ function chooseMovie(movieTitle) {
           var movieId = movieData.results[0].netflix_id;
           console.log("movie id: ",movieId)
           
+          movieGenre(movieId);
           localStorage.setItem("savedMovie", movieTitle);
-          displayDrink();
+          displayDrink(movieTitle);
+          
+          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
+          // if(movieData === '0') {
+          //   alert("Not a Valid Choice")
+          // } 
         }) 
       }
     });
@@ -69,14 +72,9 @@ function displayMovie(movieTitle, movieData) {
       movieInfoEl.append(displayTitle);
 
       // display correct poster
-      var posterContainer = $("<div>")
-      .addClass("is-flex is-justify-content-center");
-
       var displayPoster = $("<img>")
-      .attr("src", movieData.results[i].poster)
-      .addClass("is-centered");
-      posterContainer.append(displayPoster);
-      movieInfoEl.append(posterContainer);
+        .attr("src", movieData.results[i].poster);
+      movieInfoEl.append(displayPoster);
 
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
@@ -88,7 +86,6 @@ function displayMovie(movieTitle, movieData) {
 
 //match to alcohol
 function match(genreId) {
-  console.log(genreId)
   if (genreId === 783 || genreId === 4370) { // children and family or sports 
     drinkChooser("beer")
   }
@@ -142,9 +139,10 @@ function drinkChooser(drink) {
             var drinkId = drinkData.drinks[randomizer].idDrink;
             console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
 
-          // drinkId to pass through drink information function
-          drinkInfo(drinkId);
-        }) 
+            // drinkId to pass through drink information function
+            drinkInfo(drinkId);
+
+          })
       }// end if statment
     });
 }
@@ -172,11 +170,9 @@ function drinkInfo(drinkId) {
             var instructions = data.drinks[0].strInstructions;
 
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-    
-            localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
-            //displayDrink(chosenDrink, movieTitle);
-            console.log(chosenDrink)
-            displayDrink()
+
+            localStorage.setItem("savedTitle", chosenDrink);
+            displayDrink(chosenDrink);
           })
       }// end if statment
     });
@@ -225,21 +221,38 @@ $(".button").click(function (event) {
   chooseMovie(movieTitle);
 
 
+
 });
 
-displayDrink()
-function displayDrink() {
-  var chosenDrink = JSON.parse(localStorage.getItem("savedTitle"));
-  var movieTitle = JSON.parse(localStorage.getItem("savedMovie"));
-  var pair = movieTitle + " & " + chosenDrink;
-  console.log(pair)
+//display saved
+function displayDrink(savedDrink) {
+  var savedDrink = localStorage.getItem("savedTitle");
+  var savedMovie = localStorage.getItem("savedMovie")
+  var pair = savedMovie + " & " + savedDrink
+  console.log(pair);
+  $(".column ul").append("<li>" + pair + "</li>");
+}
 
-    localStorage.setItem("savedpair", JSON.stringify(pair))
+// reset forms after second search 
+// will need to pull from develop to add new features 
+// this comes up with an error move to function 
 
-    pairs = localStorage.getItem("savedpair");
-    console.log(pairs);
-    
-    $(".saved ul").append("<li>" + pairs + "</li>");
+// function resetForm() {
+//   document.getElementById("drinkCard").reset();
+// }
+// resetForm()
 
-};
+// function resetForm() {
+//   document.getElementById("drinkCard").value = "";
+// }
+// resetForm() 
 
+
+// found while researching. used to use "enter" key as well as search button 
+// var inputEnter = document.getElementById("input");
+// inputEnter.addEventListener("keypress", function(event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     document.getElementById("submit").click();
+//   }
+// }); new
