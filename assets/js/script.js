@@ -1,6 +1,8 @@
 var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
+var storagePairs = [];
+var currentPairArr = [];
 
 // host and key in one variable 
 var keyAndHost = {
@@ -14,25 +16,16 @@ var keyAndHost = {
 //Getting the movie from the API
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
-
+  
   fetch(movieSearch, keyAndHost)
     .then(function (response) {
       if (response.ok) {
         response.json()
-        .then(function(movieData){
-          //  capture image and netflix id data
-          var movieImage = movieData.results[0].img;
-          var movieId = movieData.results[0].netflix_id;
-          localStorage.setItem("savedMovie", movieTitle);
-          displayDrink(movieTitle);
-          
-          // error Uncaught (in promise) TypeError: Cannot read properties of null (reading '0') 
-          // if(movieData === '0') {
-          //   alert("Not a Valid Choice")
-          // } 
+        .then(function (movieData) {
+          displayMovie(movieTitle, movieData);
         }) 
-      };
-    });
+      } 
+  });
 };
 
 // find correct movie index to bring up correct poster
@@ -53,7 +46,7 @@ function displayMovie(movieTitle, movieData) {
       var displayTitle = $("<h3>")
         .addClass("is-size-5")
         .text(movieTitle + " is available!")
-        ;
+      ;
       movieInfoEl.append(displayTitle);
       // display correct poster
       var posterContainer = $("<div>")
@@ -66,6 +59,7 @@ function displayMovie(movieTitle, movieData) {
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
+      currentPairArr.push(movieTitle);
     };
   };
 };
@@ -147,10 +141,9 @@ function drinkInfo(drinkId) {
             });
             var instructions = data.drinks[0].strInstructions;
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-            localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
-            //displayDrink(chosenDrink, movieTitle);
-            displayDrink()
-          });
+            currentPairArr.push(chosenDrink);
+            saveStorage();
+          })
       };
     });
 };
@@ -186,23 +179,40 @@ function drinkDisplayer(drink, image, ingredients, instructions) {
 // Button click for submit movie search
 $(".button").click(function (event) {
   event.preventDefault();
+  
+  var hiddenEl = document.querySelector("#hidden");
+  hiddenEl.setAttribute("style", "visibility: visible");
   movieTitle = $(this).siblings(".input").val().trim();
   chooseMovie(movieTitle);
+
+  displayStorage();
 });
 
-//Getting and Displaying Previous Drink and Movie Pairings from Local Storage
-displayDrink()
-function displayDrink() {
-  var chosenDrink = localStorage.getItem("savedTitle");
-  var chosenDrink2= JSON.parse(chosenDrink);
-  var movieTitle = localStorage.getItem("savedMovie");
-  var movieTitle2 = JSON.parse(movieTitle);
-  var pair = movieTitle2 + " & " + chosenDrink2
-    localStorage.setItem("savedpair", JSON.stringify(pair))
-    pairs = localStorage.getItem("savedpair");
-    $(".saved ul").append("<li>" + pairs + "</li>");
-};
+function saveStorage() {
+  // format data to new array for localStorage
+  storagePairs.push({
+    movie: currentPairArr[0],
+    drink: currentPairArr[1]
+  });
 
+  // save formatted data to localStorage
+  localStorage.setItem("previousPairing", JSON.stringify(storagePairs));
+}
+
+//Getting and Displaying Previous Drink and Movie Pairings from Local Storage
+function displayStorage() {
+  var savedPairArr = JSON.parse(localStorage.getItem("previousPairing"));
+  // display to Previous Pairings
+  if (savedPairArr === null ) {
+    return;
+  }
+  else {
+    for (var i = 0; i < savedPairArr.length; i++)
+    var displayPair = $("<li>")
+    .text(savedPairArr[i].movie + " & " + savedPairArr[i].drink);
+    $("#storage-container").append(displayPair);
+  }
+};
 
 // found while researching. used to use "enter" key as well as search button 
 // var inputEnter = document.getElementById("input");

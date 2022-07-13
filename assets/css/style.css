@@ -28,3 +28,7 @@ h4 {
 label {
   font-family: Bebas neue;
 }
+
+#hidden {
+  visibility: hidden;
+}
