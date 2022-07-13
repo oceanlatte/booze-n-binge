@@ -11,6 +11,7 @@ var keyAndHost = {
   }
 };
 
+//Getting the movie from the API
 function chooseMovie(movieTitle) {
   var movieSearch = "https://unogs-unogs-v1.p.rapidapi.com/search/titles?limit=10&order_by=rating&country_list=78&title=" + movieTitle + "&type=movie&audio=english";
   localStorage.setItem("savedMovie", JSON.stringify(movieTitle));
@@ -22,68 +23,49 @@ function chooseMovie(movieTitle) {
           displayMovie(movieTitle, movieData);
         })
         .then(function(movieData){
-          console.log("this is the movie data: ", movieData);
           //  capture image and netflix id data
           var movieImage = movieData.results[0].img;
-          console.log(movieImage);
           var movieId = movieData.results[0].netflix_id;
-          console.log("movie id: ",movieId)
-          
           localStorage.setItem("savedMovie", movieTitle);
           displayDrink();
         }) 
-      }
+      };
     });
 };
 
 // find correct movie index to bring up correct poster
 function displayMovie(movieTitle, movieData) {
-  console.log("this is all the results for: ", movieTitle, movieData.results);
   var movieInfoEl = $(".movie-info");
-  console.log(movieData)
+  //error message for invalid movie title
   if (movieData.results === null || !movieData) {
-
     var errorMsg = document.createElement("p");
-
-    console.log(errorMsg);
-
     errorMsg.className = "help is-danger";
-
     errorMsg.textContent = "Title not available on Netflix";
-
     movieInfoEl.append(errorMsg);
-
   };
 
   for (var i = 0; i < movieData.results.length; i++) {
-
     var findMovie = movieData.results[i].title;
     if (findMovie.toLowerCase() == movieTitle.toLowerCase()) {
-
       //display searched title
       var displayTitle = $("<h3>")
         .addClass("is-size-5")
         .text(movieTitle + " is available!")
         ;
-
       movieInfoEl.append(displayTitle);
-
       // display correct poster
       var posterContainer = $("<div>")
       .addClass("is-flex is-justify-content-center");
-
       var displayPoster = $("<img>")
       .attr("src", movieData.results[i].poster)
       .addClass("is-centered");
       posterContainer.append(displayPoster);
       movieInfoEl.append(posterContainer);
-
       // find correct movie and send netflix ID to genre function
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
-    }
-  }
-
+    };
+  };
 };
 
 //match to alcohol
@@ -132,16 +114,11 @@ function drinkChooser(drink) {
       if (response.ok) {
         response.json()
           .then(function (drinkData) {
-            console.log(drinkData, "all drink options for " + drink + " fetched");
-
             // use get a random index for which drink to choose
             var randomizer = Math.floor(Math.random() * drinkData.drinks.length);
-
             // get drink name and drink ID #
             var drinkName = drinkData.drinks[randomizer].strDrink;
             var drinkId = drinkData.drinks[randomizer].idDrink;
-            console.log("drink chosen by randomizer:", drinkName, "#" + drinkId);
-
           // drinkId to pass through drink information function
           drinkInfo(drinkId);
         }) 
@@ -160,71 +137,56 @@ function drinkInfo(drinkId) {
             var chosenDrink = data.drinks[0].strDrink;
             var drinkImage = data.drinks[0].strDrinkThumb;
             let ingredientarray = new Array(data.drinks[0].strIngredient1, data.drinks[0].strIngredient2, data.drinks[0].strIngredient3, data.drinks[0].strIngredient4, data.drinks[0].strIngredient5, data.drinks[0].strIngredient6, data.drinks[0].strIngredient7, data.drinks[0].strIngredient8, data.drinks[0].strIngredient9, data.drinks[0].strIngredient10, data.drinks[0].strIngredient11, data.drinks[0].strIngredient12, data.drinks[0].strIngredient13, data.drinks[0].strIngredient14, data.drinks[0].strIngredient15)
-
             //results will give only valid ingredients
             let results = []
             ingredientarray.forEach(element => {
               if (element !== null || element == "") {
                 results.push(element)
               }
-            })
-
+            });
             var instructions = data.drinks[0].strInstructions;
-
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
-    
             localStorage.setItem("savedTitle", JSON.stringify(chosenDrink));
             //displayDrink(chosenDrink, movieTitle);
-            console.log(chosenDrink)
             displayDrink()
-          })
-      }// end if statment
+          });
+      };
     });
 };
-
 
 // display cocktal information to page
 function drinkDisplayer(drink, image, ingredients, instructions) {
   var displayDrink = $(".drink-container");
-
+  //Name
   var displayTitle = $("<h3>")
     .addClass("is-size-5")
     .text(drink);
-
+  //Image
   var displayImage = $("<img>")
     .attr("src", image);
-
+  //Ingredients
   var ingredientsHeader = $("<h4>")
     .text("Ingredients:");
-
   var ingredientsContainer = $("<ul>");
-
   for (var i = 0; i < ingredients.length; i++) {
     var displayingredients = $("<li>").text(ingredients[i]);
     ingredientsContainer.append(displayingredients);
   }
-
+  //Instructions
   var instructionsHeader = $("<h4>")
     .addClass("mt-2")
     .text("Instructions: ");
-
   var displayInstructions = $("<p>")
     .text(instructions);
-
+  //Adding cocktail information to card
   displayDrink.append(displayTitle, displayImage, ingredientsHeader, ingredientsContainer, instructionsHeader, displayInstructions);
 }
 
 // Button click for submit movie search
 $(".button").click(function (event) {
-
   event.preventDefault();
-
   movieTitle = $(this).siblings(".input").val().trim();
-  console.log(movieTitle);
-
   chooseMovie(movieTitle);
-
-
 });
 
 //Getting and Displaying Previous Drink and Movie Pairings from Local Storage
@@ -235,14 +197,8 @@ function displayDrink() {
   var movieTitle = localStorage.getItem("savedMovie");
   var movieTitle2 = JSON.parse(movieTitle);
   var pair = movieTitle2 + " & " + chosenDrink2
-
-  console.log(pair)
-
     localStorage.setItem("savedpair", JSON.stringify(pair))
-
     pairs = localStorage.getItem("savedpair");
-    console.log(pairs);
-    
     $(".saved ul").append("<li>" + pairs + "</li>");
 };
 
