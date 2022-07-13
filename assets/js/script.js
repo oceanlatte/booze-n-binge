@@ -229,9 +229,9 @@ $(".button").click(function (event) {
 
 displayDrink()
 function displayDrink() {
-  var chosenDrink = localStorage.getItem("savedTitle");
-  var movieTitle = localStorage.getItem("savedMovie")
-  var pair = movieTitle + " & " + chosenDrink
+  var chosenDrink = JSON.parse(localStorage.getItem("savedTitle"));
+  var movieTitle = JSON.parse(localStorage.getItem("savedMovie"));
+  var pair = movieTitle + " & " + chosenDrink;
   console.log(pair)
 
     localStorage.setItem("savedpair", JSON.stringify(pair))
