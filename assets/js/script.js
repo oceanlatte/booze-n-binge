@@ -188,7 +188,7 @@ $(".button").click(function (event) {
   
   movieTitle = $(this).siblings(".input").val().trim();
   chooseMovie(movieTitle);
-
+  
   displayStorage();
 });
 
@@ -218,11 +218,4 @@ function displayStorage() {
   }
 };
 
-// found while researching. used to use "enter" key as well as search button 
-// var inputEnter = document.getElementById("input");
-// inputEnter.addEventListener("keypress", function(event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     document.getElementById("submit").click();
-//   }
-// }); new
+
