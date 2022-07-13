@@ -1,6 +1,7 @@
 var movieTitle = document.querySelector(".input").textContent;
 var searchEl = document.querySelector("#movie-search");
 var movieInfoEl = $(".movie-info");
+var pairs = [];
 
 // host and key in one variable 
 var keyAndHost = {
@@ -58,7 +59,6 @@ function displayMovie(movieTitle, movieData) {
       var findMovieId = movieData.results[i].netflix_id;
       match(findMovieId);
       localStorage.setItem("savedMovie", movieTitle);
-      displayStorage();
     };
   };
 };
@@ -142,7 +142,8 @@ function drinkInfo(drinkId) {
             var instructions = data.drinks[0].strInstructions;
             drinkDisplayer(chosenDrink, drinkImage, results, instructions);
             localStorage.setItem("savedTitle", chosenDrink);
-          });
+            displayStorage();
+          })
       };
     });
 };
@@ -187,10 +188,24 @@ function displayStorage() {
   var savedDrink = localStorage.getItem("savedTitle");
   var savedTitle = localStorage.getItem("savedMovie");
   console.log(savedDrink, savedTitle);
+
+  var savedPair = {
+    movie: savedTitle,
+    drink: savedDrink
+  };
+
+  pairs.push(savedPair);
+
+  localStorage.setItem("previousPairing", JSON.stringify(pairs));
+
+  var displayPair = $("<li>")
+  .text(savedTitle + " & " + savedDrink);
+
+  $("#storage-container").append(displayPair);
   
-  var pair = savedTitle + " & " + savedDrink
-    localStorage.setItem("savedpair", JSON.stringify(pair))
-    pairs = localStorage.getItem("savedpair");
-    $(".saved ul").append("<li>" + pairs + "</li>");
+  // var pair = savedTitle + " & " + savedDrink
+  //   localStorage.setItem("savedpair", JSON.stringify(pair))
+  //   pairs = localStorage.getItem("savedpair");
+  //   $(".saved ul").append("<li>" + pairs + "</li>");
 };
 
